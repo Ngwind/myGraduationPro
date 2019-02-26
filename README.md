@@ -5,7 +5,6 @@
 使用python自带的venv来创建虚拟环境.
 
 ### 常用操作
-1. 激活虚拟环境:执行activate文件;取消激活使用deactivate;window和linux中可能有所不同.
-
-2. 使用pip导出所有包:
+1. `git clone 库的地址`下载代码库
+2. `git push`推送代码到远程库;`git fetch`跟新本地代码
 
