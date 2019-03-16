@@ -12,3 +12,6 @@ django版本:2.0
 1. `git clone 库的地址`下载代码库
 1. `git push`推送代码到远程库;`git fetch`跟新本地代码
 
+## 工作记录
+
+1. 2019年3月16日: 使用mysql数据库做持久化存储，需要使用pip安装myclient库。
