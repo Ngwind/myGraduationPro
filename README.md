@@ -15,4 +15,4 @@ django版本:2.0
 ## 工作记录
 
 1. 2019年3月16日: 使用mysql数据库做持久化存储，需要使用pip安装myclient库。
-2. 更改开发环境的库，把g盘下的项目改成c盘。
+2. 更改开发环境的库，把g盘下的项目改成c盘。在pycharm使用`ctrl+K`commit修改，使用`ctrl+shift+K`push修改。
