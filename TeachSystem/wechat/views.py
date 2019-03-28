@@ -2,6 +2,7 @@ import hashlib
 from django.http import HttpResponse
 
 
+@csrf_exempt
 def we_chat_main(request):
     if request.method == "GET":
         # 接收微信服务器get请求发过来的参数
