@@ -1,7 +1,9 @@
 import hashlib
+import requests
+import json
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-
+from wechatpy import parse_message, create_reply
 
 @csrf_exempt
 def we_chat_main(request):
@@ -28,8 +30,32 @@ def we_chat_main(request):
 
 
 def auto_reply(request):
-    return "hello~"
+    wx_xml = request.body
+    msg = parse_message(wx_xml)
+    if msg.type == "text":
+        send_data = {
+            "perception":
+                {
+                    "inputText":
+                        {
+                            "text": None
+                        }
+                },
+            "userInfo":
+                {
+                    "apiKey": "1d6a5a9e97f74ef085e22e65d3f6efff",
+                    "userId": "123456"
+                }
+        }
+        ul_url = "http://openapi.tuling123.com/openapi/api/v2"
+        send_data["perception"]["inputText"]["text"] = msg.content
+        r = requests.post(url=ul_url, data=json.dumps(send_data))
+        text_reply = create_reply(r.json()['results'][0]['values']['text'], message=msg)
+    else:
+        text_reply = create_reply('我只会看文字消息', message=msg)
+    return text_reply.render()
 
 
 def test_func(request):
     return HttpResponse('Hello world!')
+
