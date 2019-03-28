@@ -15,10 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from TeachSystem.wechat import views
+from wechat import views
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('wx/', views.we_chat_main),
+    path('testfunc/', views.test_func),
 ]

@@ -27,3 +27,7 @@ def we_chat_main(request):
 
 def auto_reply(request):
     return "hello~"
+
+
+def test_func(request):
+    return HttpResponse('Hello world!')
