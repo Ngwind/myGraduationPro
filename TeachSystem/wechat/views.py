@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from wechatpy import parse_message, create_reply
 
+
 @csrf_exempt
 def we_chat_main(request):
     if request.method == "GET":
@@ -58,4 +59,3 @@ def auto_reply(request):
 
 def test_func(request):
     return HttpResponse('Hello world!')
-
