@@ -14,12 +14,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from wechat import views
+from django.urls import path,include
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('wx/', views.we_chat_main),
-    path('testfunc/', views.test_func),
+    path('wx/', include("wechat.urls"))
 ]
