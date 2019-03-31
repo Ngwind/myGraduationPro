@@ -49,7 +49,7 @@ class CourseProgress(models.Model):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        pass
+        return self.video.videoName+"-"+self.student.username
 
 
 # 课程成绩表
@@ -59,9 +59,8 @@ class Scores(models.Model):
     score = models.IntegerField(verbose_name="分数", null=True)
 
     class Meta:
-        verbose_name = "课程成绩"
+        verbose_name = "学生成绩"
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        pass
-
+        return self.course.courseName+"-"+self.student.username

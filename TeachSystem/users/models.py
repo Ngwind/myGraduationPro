@@ -36,7 +36,7 @@ class Teacher(AbstractUser):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return self.first_name+self.last_name
+        return self.last_name+self.first_name
 
 
 # 微信openid记录表
