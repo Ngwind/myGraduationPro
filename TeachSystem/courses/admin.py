@@ -10,6 +10,13 @@ class ProgressAdmin(admin.ModelAdmin):
     ordering = ('video', 'student')
     readonly_fields = ['progress', 'editdate', 'video', 'student']
 
+    def get_queryset(self, request):
+        """函数作用：当前登录的普通用户只能看到自己课程的学生观看进度"""
+        qs = super(ProgressAdmin, self).get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(video__in=(Video.objects.filter(publisher=request.user)).values('id'))
+
     def get_readonly_fields(self, request, obj=None):
         """  重新定义此函数，限制普通用户所能修改的字段  """
         if request.user.is_superuser:
@@ -52,6 +59,7 @@ class ScoresAdmin(admin.ModelAdmin):
     list_display = ('course', 'student', 'score')
     search_fields = ['student', 'course']
     ordering = ['course', 'score']
+    readonly_fields = ['course', 'student']
 
     def get_queryset(self, request):
         """函数作用：当前登录的普通用户只能看到自己课程的成绩"""
@@ -59,6 +67,12 @@ class ScoresAdmin(admin.ModelAdmin):
         if request.user.is_superuser:
             return qs
         return qs.filter(course__in=(Course.objects.filter(publisher=request.user)).values('id'))
+
+    def get_readonly_fields(self, request, obj=None):
+        """  重新定义此函数，限制普通用户所能修改的字段  """
+        if request.user.is_superuser:
+            self.readonly_fields = []
+        return self.readonly_fields
 
 
 admin.site.site_header = 'GDUT在线教学管理系统'
