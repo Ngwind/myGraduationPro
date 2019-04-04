@@ -29,3 +29,4 @@ TeachSystem/courses/__pycache__/models.cpython-37.pyc
 TeachSystem/TeachSystem/__pycache__/urls.cpython-37.pyc
 TeachSystem/users/__pycache__/admin.cpython-37.pyc
 TeachSystem/users/__pycache__/models.cpython-37.pyc
+TeachSystem/courses/__pycache__/admin.cpython-37.pyc
