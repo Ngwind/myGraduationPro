@@ -6,8 +6,11 @@
       <w>editable</w>
       <w>extra</w>
       <w>fields</w>
+      <w>filter</w>
       <w>list</w>
       <w>model</w>
+      <w>ordering</w>
+      <w>search</w>
     </words>
   </dictionary>
 </component>
