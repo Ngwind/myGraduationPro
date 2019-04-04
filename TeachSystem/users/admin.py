@@ -3,6 +3,7 @@ from django.contrib.auth.admin import UserAdmin
 from .models import Teacher, Student
 
 
+@admin.register(Student)
 class StudentAdmin(admin.ModelAdmin):
     list_display = ('studentId', 'username', 'college', 'userclass', 'createdate')
     search_fields = ['studentId', 'username', 'college', 'userclass']
@@ -12,5 +13,4 @@ class StudentAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Teacher, UserAdmin)
-admin.site.register(Student, StudentAdmin)
 
