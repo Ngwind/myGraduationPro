@@ -13,4 +13,3 @@ class StudentAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Teacher, UserAdmin)
-

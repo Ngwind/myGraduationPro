@@ -28,9 +28,3 @@ class VideoAdmin(admin.ModelAdmin):
 @admin.register(Scores)
 class ScoresAdmin(admin.ModelAdmin):
     list_display = ('course', 'student', 'score')
-
-
-
-
-
-
