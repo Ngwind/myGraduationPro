@@ -17,10 +17,10 @@ class Student(models.Model):
     college = models.CharField('学院', max_length=50, null=False)
     userclass = models.CharField('班级', max_length=50, null=False)
     password = models.CharField('密码', max_length=20, null=False, default='123456')
-    createdate = models.DateTimeField("添加时间", default=datetime.now)
+    createdate = models.DateTimeField("添加时间", auto_now_add=True)
 
     class Meta:
-        verbose_name = "学生管理"
+        verbose_name = "学生"
         verbose_name_plural = verbose_name
 
     def __str__(self):
@@ -32,7 +32,7 @@ class Teacher(AbstractUser):
     college = models.CharField('学院', max_length=50, null=False)
 
     class Meta:
-        verbose_name = "教师管理"
+        verbose_name = "教师"
         verbose_name_plural = verbose_name
 
     def __str__(self):
@@ -43,7 +43,7 @@ class Teacher(AbstractUser):
 class Openid(models.Model):
     openid = models.CharField('openid', max_length=200, default=None)
     studentid = models.ForeignKey('Student', on_delete=models.CASCADE, verbose_name="学号")
-    createdate = models.DateTimeField("添加时间", default=datetime.now)
+    createdate = models.DateTimeField("添加时间", auto_now_add=True)
     editdate = models.DateTimeField("修改时间", auto_now=True)
 
     class Meta:
