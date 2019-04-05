@@ -1,17 +1,30 @@
+from import_export.admin import ImportExportModelAdmin
+from import_export import resources
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import Teacher, Student
 from courses.models import CourseProgress, Video # 忽略这些红色波浪线，其实是正确的
 
 
+class StudentResource(resources.ModelResource):
+
+    class Meta:
+        model = Student
+        fields = ('studentId', 'username', 'college', 'userclass', 'password', )
+        import_id_fields = ('studentId',)
+        export_order = ('studentId', 'username', 'college', 'userclass', 'password', )
+        skip_unchanged = True
+
+
 @admin.register(Student)
-class StudentAdmin(admin.ModelAdmin):
+class StudentAdmin(ImportExportModelAdmin):
     list_display = ('studentId', 'username', 'college', 'userclass', 'createdate')
     search_fields = ['studentId', 'username', 'college', 'userclass']
     list_filter = ['college', 'userclass']
     ordering = ('college', 'userclass', 'studentId')
     readonly_fields = ['studentId', 'username', 'college', 'userclass', 'createdate', 'password', 'gender']
     # list_editable = ['college', 'userclass']
+    resource_class = StudentResource
 
     def get_queryset(self, request):
         """限定普通用户只能看到自己学生的信息"""

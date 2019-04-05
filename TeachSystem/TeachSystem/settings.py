@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'wechat',
     'users',
     'courses',
+    'import_export',
 ]
 
 MIDDLEWARE = [
@@ -127,3 +128,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'users.Teacher'
+
+STATIC_ROOT = 'E:/static/'
