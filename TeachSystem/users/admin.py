@@ -89,7 +89,6 @@ class TeacherResource(resources.ModelResource):
         skip_unchanged = True
 
 
-
 @admin.register(Teacher)
 class TeacherAdmin(ImportExportMixin, UserAdmin):
     """教师admin配置"""
