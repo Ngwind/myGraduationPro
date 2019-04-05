@@ -2,14 +2,19 @@
   <dictionary name="wuwenda">
     <words>
       <w>admin</w>
+      <w>column</w>
       <w>display</w>
       <w>editable</w>
+      <w>export</w>
       <w>extra</w>
+      <w>field</w>
       <w>fields</w>
       <w>filter</w>
       <w>list</w>
       <w>model</w>
+      <w>order</w>
       <w>ordering</w>
+      <w>resource</w>
       <w>search</w>
     </words>
   </dictionary>
