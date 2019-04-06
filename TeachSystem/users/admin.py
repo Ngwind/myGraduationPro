@@ -87,8 +87,7 @@ class TeacherResource(resources.ModelResource):
             # print("after_save_instance", type(instance))
             # print("after_save_instance", instance)
             # print("after_save_instance", dry_run)
-            tech_group = Group.objects.get(name='任课教师')
-            instance.groups.add(tech_group)
+            instance.groups.add(Group.objects.get(name='任课教师'))
 
     def get_export_fields(self):
         """默认导入导出field的column_name为字段的名称，这里修改为字段的verbose_name"""
