@@ -8,6 +8,7 @@ from .models import Teacher, Student
 from courses.models import CourseProgress, Video  # 忽略这些红色波浪线，其实是正确的
 
 
+# ---------------学生------------------
 class StudentResource(resources.ModelResource):
     """学生导入导出文件配置"""
 
@@ -62,6 +63,7 @@ class StudentAdmin(ImportExportModelAdmin):
         return self.readonly_fields
 
 
+# ---------------教师------------------
 class TeacherResource(resources.ModelResource):
     """教师导入导出文件配置"""
     def __init__(self):
@@ -98,21 +100,9 @@ class TeacherAdmin(ImportExportMixin, UserAdmin):
     list_display_links = ['username', ]
     resource_class = TeacherResource
     actions = ["set_init_password"]
-
-    # def save_model(self, request, obj, form, change):
-    #     print("save_model 被调用")
-    #     super(TeacherAdmin, self).save_model(request, obj, form, change)
-
-    # def get_fieldsets(self, request, obj=None):
-    #     """在教师信息界面中的'个人信息'中添加college字段"""
-    #     tp = super(UserAdmin, self).get_fieldsets(request, obj)
-    #     ls = list(tp)
-    #     new_list = list(ls[1][1]['fields'])
-    #     if 'college' not in new_list:
-    #         new_list.append('college')
-    #     new_tp = tuple(new_list)
-    #     ls[1][1]['fields'] = new_tp
-    #     return tuple(ls)
+    add_fieldsets = ((None, {'classes': ('wide',), 'fields': ('college', )}), ) + UserAdmin.add_fieldsets
+    fieldsets = ((None, {'fields': ('college', )}), ) + UserAdmin.fieldsets
+    list_filter = ('college', 'groups', 'is_superuser', 'is_active',)
 
     def set_init_password(self, request, queryset):
         """初始化密码action函数"""
