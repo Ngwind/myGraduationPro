@@ -1,8 +1,10 @@
 <component name="ProjectDictionaryState">
   <dictionary name="wuwenda">
     <words>
+      <w>actions</w>
       <w>admin</w>
       <w>column</w>
+      <w>description</w>
       <w>display</w>
       <w>editable</w>
       <w>export</w>
@@ -16,6 +18,7 @@
       <w>ordering</w>
       <w>resource</w>
       <w>search</w>
+      <w>short</w>
     </words>
   </dictionary>
 </component>

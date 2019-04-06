@@ -6,7 +6,7 @@ from .models import Course, Video, CourseProgress, Scores
 @admin.register(CourseProgress)
 class ProgressAdmin(admin.ModelAdmin):
     list_display = ('video', 'student', 'editdate', 'progress')
-    search_fields = ('video', 'student')
+    search_fields = ('video__videoName', 'student__username')
     ordering = ('video', 'student')
     readonly_fields = ['progress', 'editdate', 'video', 'student']
 
@@ -41,8 +41,8 @@ class CourseAdmin(admin.ModelAdmin):
 @admin.register(Video)
 class VideoAdmin(admin.ModelAdmin):
     list_display = ('videoName', 'chapterId', 'videoUrl', 'course', 'publisher', 'createdate', 'editdate')
-    search_fields = ['videoName', 'course', 'publisher']
-    list_filter = ['publisher', 'course']
+    search_fields = ['videoName', 'publisher__first_name', 'course__courseName']
+    # list_filter = ['publisher', 'course']
     ordering = ['publisher', 'course', 'chapterId']
 
     def get_queryset(self, request):
@@ -57,7 +57,7 @@ class VideoAdmin(admin.ModelAdmin):
 @admin.register(Scores)
 class ScoresAdmin(admin.ModelAdmin):
     list_display = ('course', 'student', 'score')
-    search_fields = ['student', 'course']
+    search_fields = ['student__username', 'course__courseName']
     ordering = ['course', 'score']
     readonly_fields = ['course', 'student']
 

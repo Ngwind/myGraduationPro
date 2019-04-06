@@ -3,6 +3,7 @@ from import_export import resources
 from django.apps import apps
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.hashers import make_password
 from .models import Teacher, Student
 from courses.models import CourseProgress, Video  # 忽略这些红色波浪线，其实是正确的
 
@@ -41,7 +42,7 @@ class StudentAdmin(ImportExportModelAdmin):
     """学生admin后台配置"""
     list_display = ('studentId', 'username', 'college', 'userclass', 'createdate')
     search_fields = ['studentId', 'username', 'college', 'userclass']
-    list_filter = ['college', 'userclass']
+    list_filter = ['college', ]
     ordering = ('college', 'userclass', 'studentId')
     readonly_fields = ['studentId', 'username', 'college', 'userclass', 'createdate', 'password', 'gender']
     # list_editable = ['college', 'userclass']
@@ -83,26 +84,40 @@ class TeacherResource(resources.ModelResource):
 
     class Meta:
         model = Teacher
-        fields = ('username', 'first_name', 'college',)
-        # import_id_fields = ('id',)
-        export_order = ('username', 'first_name', 'college',)
+        fields = ('username', 'first_name', 'college','is_staff')
+        import_id_fields = ('username',)
+        export_order = ('username', 'first_name', 'college', 'is_staff')
         skip_unchanged = True
 
 
 @admin.register(Teacher)
 class TeacherAdmin(ImportExportMixin, UserAdmin):
     """教师admin配置"""
-    list_display = ['first_name', 'username', 'college', 'is_staff', 'date_joined']
-    ordering = ['first_name', 'username', 'college', 'is_staff', 'date_joined']
+    list_display = ['id', 'username', 'first_name', 'college', 'is_staff', 'date_joined', 'password']
+    ordering = ['id', ]
+    list_display_links = ['username', ]
     resource_class = TeacherResource
+    actions = ["set_init_password"]
 
-    def get_fieldsets(self, request, obj=None):
-        """在教师信息界面中的'个人信息'中添加college字段"""
-        tp = super(UserAdmin, self).get_fieldsets(request, obj)
-        ls = list(tp)
-        new_list = list(ls[1][1]['fields'])
-        if 'college' not in new_list:
-            new_list.append('college')
-        new_tp = tuple(new_list)
-        ls[1][1]['fields'] = new_tp
-        return tuple(ls)
+    # def save_model(self, request, obj, form, change):
+    #     print("save_model 被调用")
+    #     super(TeacherAdmin, self).save_model(request, obj, form, change)
+
+    # def get_fieldsets(self, request, obj=None):
+    #     """在教师信息界面中的'个人信息'中添加college字段"""
+    #     tp = super(UserAdmin, self).get_fieldsets(request, obj)
+    #     ls = list(tp)
+    #     new_list = list(ls[1][1]['fields'])
+    #     if 'college' not in new_list:
+    #         new_list.append('college')
+    #     new_tp = tuple(new_list)
+    #     ls[1][1]['fields'] = new_tp
+    #     return tuple(ls)
+
+    def set_init_password(self, request, queryset):
+        """初始化密码action函数"""
+        init_password = 'gdut123456'
+        init_password_sercet = make_password(init_password)
+        update_row = queryset.update(password=init_password_sercet)
+        self.message_user(request, str(update_row)+"个用户密码成功初始化为"+init_password, fail_silently=False)
+    set_init_password.short_description = "将选中用户密码初始化"
