@@ -1,6 +1,7 @@
 from import_export.admin import ImportExportModelAdmin, ImportExportMixin
 from import_export import resources
 from django.apps import apps
+from django.contrib.auth.models import Group
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.hashers import make_password
@@ -73,6 +74,21 @@ class TeacherResource(resources.ModelResource):
         self.vname_dict = {}
         for i in field_list:
             self.vname_dict[i.name] = i.verbose_name
+
+    def before_save_instance(self, instance, using_transactions, dry_run):
+        # print("before_save_instance", type(instance))
+        # print("before_save_instance", instance)
+        # print("before_save_instance", dry_run)
+        pass
+
+    def after_save_instance(self, instance, using_transactions, dry_run):
+        """在导入teacher后，添加到特定组里"""
+        if not dry_run:
+            # print("after_save_instance", type(instance))
+            # print("after_save_instance", instance)
+            # print("after_save_instance", dry_run)
+            tech_group = Group.objects.get(name='任课教师')
+            instance.groups.add(tech_group)
 
     def get_export_fields(self):
         """默认导入导出field的column_name为字段的名称，这里修改为字段的verbose_name"""

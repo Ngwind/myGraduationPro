@@ -3,6 +3,7 @@
     <words>
       <w>actions</w>
       <w>admin</w>
+      <w>after</w>
       <w>column</w>
       <w>description</w>
       <w>display</w>
@@ -12,11 +13,13 @@
       <w>field</w>
       <w>fields</w>
       <w>filter</w>
+      <w>instance</w>
       <w>list</w>
       <w>model</w>
       <w>order</w>
       <w>ordering</w>
       <w>resource</w>
+      <w>save</w>
       <w>search</w>
       <w>short</w>
     </words>

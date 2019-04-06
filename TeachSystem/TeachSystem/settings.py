@@ -132,4 +132,4 @@ AUTH_USER_MODEL = 'users.Teacher'
 STATIC_ROOT = 'E:/static/'
 
 # django-import-export
-IMPORT_EXPORT_USE_TRANSACTIONS = True
+IMPORT_EXPORT_USE_TRANSACTIONS = False
