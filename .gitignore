@@ -1,6 +1,4 @@
 
 .idea/*
 .vscode/*
-TeachSystem/courses/__pycache__/*
-TeachSystem/users/__pycache__/*
-TeachSystem/TeachSystem/__pycache__/*
+__pycache__/*
