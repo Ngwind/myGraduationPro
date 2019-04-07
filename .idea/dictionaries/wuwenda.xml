@@ -5,7 +5,10 @@
       <w>admin</w>
       <w>after</w>
       <w>column</w>
+      <w>data</w>
       <w>description</w>
+      <w>dict</w>
+      <w>diff</w>
       <w>display</w>
       <w>editable</w>
       <w>export</w>
@@ -13,7 +16,10 @@
       <w>field</w>
       <w>fields</w>
       <w>filter</w>
+      <w>first</w>
+      <w>headers</w>
       <w>instance</w>
+      <w>item</w>
       <w>list</w>
       <w>model</w>
       <w>order</w>
@@ -22,6 +28,9 @@
       <w>save</w>
       <w>search</w>
       <w>short</w>
+      <w>skip</w>
+      <w>unchanged</w>
+      <w>vname</w>
     </words>
   </dictionary>
 </component>

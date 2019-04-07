@@ -42,7 +42,7 @@ class StudentResource(resources.ModelResource):
 @admin.register(Student)
 class StudentAdmin(ImportExportModelAdmin):
     """学生admin后台配置"""
-    list_display = ('studentId', 'username', 'college', 'userclass', 'createdate')
+    list_display = ('studentId', 'username', 'college', 'userclass')
     search_fields = ['studentId', 'username', 'college', 'userclass']
     list_filter = ['college', ]
     ordering = ('college', 'userclass', 'studentId')
@@ -50,12 +50,12 @@ class StudentAdmin(ImportExportModelAdmin):
     # list_editable = ['college', 'userclass']
     resource_class = StudentResource
 
-    def get_queryset(self, request):
-        """限定普通用户只能看到自己学生的信息"""
-        qs = super(StudentAdmin, self).get_queryset(request)
-        if request.user.is_superuser:
-            return qs
-        return qs.filter(studentId__in=(CourseProgress.objects.filter(video__in=Video.objects.filter(publisher=request.user).values('id'))).values('student'))
+    # def get_queryset(self, request):
+    #     """限定普通用户只能看到自己学生的信息"""
+    #     qs = super(StudentAdmin, self).get_queryset(request)
+    #     if request.user.is_superuser:
+    #         return qs
+    #     return qs.filter(studentId__in=(CourseProgress.objects.filter(video__in=Video.objects.filter(publisher=request.user).values('id'))).values('student'))
 
     def get_readonly_fields(self, request, obj=None):
         """设置普通用户不能编辑学生信息"""
@@ -75,18 +75,9 @@ class TeacherResource(resources.ModelResource):
         for i in field_list:
             self.vname_dict[i.name] = i.verbose_name
 
-    def before_save_instance(self, instance, using_transactions, dry_run):
-        # print("before_save_instance", type(instance))
-        # print("before_save_instance", instance)
-        # print("before_save_instance", dry_run)
-        pass
-
     def after_save_instance(self, instance, using_transactions, dry_run):
         """在导入teacher后，添加到特定组里"""
         if not dry_run:
-            # print("after_save_instance", type(instance))
-            # print("after_save_instance", instance)
-            # print("after_save_instance", dry_run)
             instance.groups.add(Group.objects.get(name='任课教师'))
 
     def get_export_fields(self):
