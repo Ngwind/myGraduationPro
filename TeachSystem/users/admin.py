@@ -1,12 +1,29 @@
+from collections import OrderedDict
 from import_export.admin import ImportExportModelAdmin, ImportExportMixin
 from import_export import resources
 from django.apps import apps
 from django.contrib.auth.models import Group
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.hashers import make_password
 from .models import Teacher, Student
-from courses.models import CourseProgress, Video  # 忽略这些红色波浪线，其实是正确的
+from courses.models import CourseProgress, Video, Scores, Course  # 忽略这些红色波浪线，其实是正确的
+
+
+def _make_action(course, course_obj):
+    """动态创建StudentAdmin的action"""
+    def binding_to_video(StudentAdmin, request, queryset):
+        """创建指定课程的Scores的action函数"""
+        for stu in queryset:
+            # print(course_obj)
+            # print(stu)
+            res = Scores.objects.update_or_create(defaults={'score': 0}, course=course_obj, student=stu)  # course课程主键, student学生主键
+            # print(res)
+        messages.success(request, '操作成功！')
+        pass
+    binding_to_video.func_name = 'binding_to_video_{}'.format(course_obj.id)
+    binding_to_video.short_description = '添加所选学生到课程:{}'.format(course)
+    return binding_to_video
 
 
 # ---------------学生------------------
@@ -49,13 +66,22 @@ class StudentAdmin(ImportExportModelAdmin):
     readonly_fields = ['studentId', 'username', 'college', 'userclass', 'createdate', 'password', 'gender']
     # list_editable = ['college', 'userclass']
     resource_class = StudentResource
+    # actions = [_make_action(course, course_id) for course, course_id in ]
 
-    # def get_queryset(self, request):
-    #     """限定普通用户只能看到自己学生的信息"""
-    #     qs = super(StudentAdmin, self).get_queryset(request)
-    #     if request.user.is_superuser:
-    #         return qs
-    #     return qs.filter(studentId__in=(CourseProgress.objects.filter(video__in=Video.objects.filter(publisher=request.user).values('id'))).values('student'))
+    def get_actions(self, request):
+        actions = super().get_actions(request)
+        # if request.user.is_superuser:
+        #     print(actions)
+        #     return actions
+        # else:
+        qs = Course.objects.filter(publisher=request.user.id)
+        for obj in qs:
+            func = _make_action(obj.courseName, obj)
+            name = func.func_name
+            desc = func.short_description
+            actions[name] = (func, name, desc)
+            print(actions)
+        return OrderedDict(actions)
 
     def get_readonly_fields(self, request, obj=None):
         """设置普通用户不能编辑学生信息"""
