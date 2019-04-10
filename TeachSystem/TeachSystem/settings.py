@@ -129,7 +129,7 @@ STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'users.Teacher'
 
-STATIC_ROOT = 'E:/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "collected_static/")
 
 # django-import-export
 IMPORT_EXPORT_USE_TRANSACTIONS = False
