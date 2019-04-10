@@ -58,5 +58,5 @@ def auto_reply(request):
 
 
 def test_func(request):
-    openid = request.GET.get('openid', default=None)
+    openid = request.POST.get('openid', default=None)
     return HttpResponse('Hello world!'+openid)
