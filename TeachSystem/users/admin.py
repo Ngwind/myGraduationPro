@@ -80,7 +80,7 @@ class StudentAdmin(ImportExportModelAdmin):
             name = func.func_name
             desc = func.short_description
             actions[name] = (func, name, desc)
-            print(actions)
+            # print(actions)
         return OrderedDict(actions)
 
     def get_readonly_fields(self, request, obj=None):
