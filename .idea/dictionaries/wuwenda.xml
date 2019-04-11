@@ -6,7 +6,9 @@
       <w>admin</w>
       <w>after</w>
       <w>binding</w>
+      <w>click</w>
       <w>column</w>
+      <w>context</w>
       <w>data</w>
       <w>description</w>
       <w>dict</w>
@@ -23,6 +25,8 @@
       <w>instance</w>
       <w>item</w>
       <w>list</w>
+      <w>loginfail</w>
+      <w>loginflag</w>
       <w>make</w>
       <w>model</w>
       <w>order</w>
@@ -32,6 +36,7 @@
       <w>search</w>
       <w>short</w>
       <w>skip</w>
+      <w>tipsflag</w>
       <w>unchanged</w>
       <w>vname</w>
     </words>
