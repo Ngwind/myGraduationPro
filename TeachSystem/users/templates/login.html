@@ -6,47 +6,61 @@
     <!-- 引入 WeUI -->
     <link rel="stylesheet" href="http://res.wx.qq.com/open/libs/weui/1.1.3/weui.min.css"/>
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <style type="text/css">body{background-color:#efeff4}</style>
 </head>
 <body ontouchstart>
-    <div class="weui-cells weui-cells_form">
-        <div class="weui-cell">
-            <div class="weui-cell__hd"><label class="weui-label">学号</label></div>
-            <div class="weui-cell__bd">
-                <input class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入学号">
+<div id="container">
+    <div class="register">
+        <form id="registerForm">
+            <div class="weui_cells_title">用户注册</div>
+            <div class="weui_cells weui_cells_form">
+                ::before
+                <div class="weui_cell">
+                    <div class="weui_cell_hd">
+                        <label for="" class="weui_label">用户名</label>
+                    </div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input type="text" name="username" class="weui_input" required="" placeholder="请输入用户名">
+                    </div>
+                    <div class="weui_cell_ft">
+                        <i class="weui_icon_warn"></i>
+                    </div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_hd">
+                        <label for="" class="weui_label">手机号</label>
+                    </div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input type="tel" name="tel" class="weui_input" required="" pattern="[\d]{8,11}"
+                               notmatchtips="请输入正确的手机号" placeholder="请输入手机号">
+                    </div>
+                    <div class="weui_cell_ft">
+                        <i class="weui_icon_warn"></i>
+                    </div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_hd">
+                        <label for="" class="weui_label">密码</label>
+                    </div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input type="password" name="password" class="weui_input" required="" pattern="[\w]{6,}"
+                               notmatchtips="密码至少6位" placeholder="请输入密码">
+                    </div>
+                    <div class="weui_cell_ft">
+                        <i class="weui_icon_warn"></i>
+                    </div>
+                </div>
+                ::after
             </div>
-        </div>
-        <div class="weui-cell weui-cell_vcode">
-            <div class="weui-cell__hd">
-                <label class="weui-label">手机号</label>
+            <p class="weui_cells_tips">在微信里面其实可以调网页授权的</p>
+            <div class="weui_btn_area">
+                <a href="javascript:;" class="weui_btn weui_btn_primary js_btn">"注册"
+                    ::after
+                </a>
             </div>
-            <div class="weui-cell__bd">
-                <input class="weui-input" type="tel" placeholder="请输入手机号">
-            </div>
-            <div class="weui-cell__ft">
-                <button class="weui-vcode-btn">获取验证码</button>
-            </div>
-        </div>
-        <div class="weui-cell">
-            <div class="weui-cell__hd"><label for="" class="weui-label">日期</label></div>
-            <div class="weui-cell__bd">
-                <input class="weui-input" type="date" value="">
-            </div>
-        </div>
-        <div class="weui-cell">
-            <div class="weui-cell__hd"><label for="" class="weui-label">时间</label></div>
-            <div class="weui-cell__bd">
-                <input class="weui-input" type="datetime-local" value="" placeholder="">
-            </div>
-        </div>
-        <div class="weui-cell weui-cell_vcode">
-            <div class="weui-cell__hd"><label class="weui-label">验证码</label></div>
-            <div class="weui-cell__bd">
-                <input class="weui-input" type="number" placeholder="请输入验证码">
-            </div>
-            <div class="weui-cell__ft">
-                <img class="weui-vcode-img" src="./images/vcode.jpg">
-            </div>
-        </div>
+
+        </form>
     </div>
+</div>
 </body>
 </html>
