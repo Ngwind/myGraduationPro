@@ -8,11 +8,13 @@ def index(request):
 
 
 def login(request):
-    """返回静态登录页面"""
+    """返回静态登录页面或者重定向到个人中心"""
+    """先拿到微信服务器发来的openid，然后去数据库查询有没有这个数据，如果有就重定向到个人中心"""
+    pass
     return render(request, "login.html", context={})
 
 
-def check_login(request):
+def user_center(request):
     """接受一个表单，校验登录"""
-    pass
+    return HttpResponse('登录成功！')
 
