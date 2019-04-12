@@ -23,7 +23,6 @@ def login(request):
             try:
                 json_oauth = wco.fetch_access_token(code)
             except WeChatOAuthException:  # 考虑code被重复使用的情况，重定向到微信授权url
-                print(wco.authorize_url)
                 return HttpResponseRedirect(redirect_to='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx425d2aedb363e9c6&redirect_uri=https%3a%2f%2fwww.gdutwuwenda.cn%2fuser%2flogin%2f&response_type=code&scope=snsapi_base&state=123#wechat_redirect')
 
             openid = json_oauth['openid']
@@ -31,7 +30,7 @@ def login(request):
                 o = Openid.objects.get(openid=openid)
                 s = o.studentid  # 获取openid对应的学生models对象
                 userinfo = {"s": s}
-                return HttpResponse('welcome by openid')  # render(request, "user_center.html", userinfo)
+                return render(request, "users/profile.html", userinfo)
             except ObjectDoesNotExist:  # openid不在库中，当前用户是新用户，在openid表中记录
                 context['openid'] = openid  # 模板中添加openid信息，返回给前端。用于POST方法时携带。
     elif request.method == "POST":
@@ -50,7 +49,7 @@ def login(request):
             if openid != '0':  # 判断一次，防止保存值为0的openid
                 porc =  Openid.objects.update_or_create(openid=openid, studentid=s)  # 保存openid和账号信息。
             userinfo = {"s": s}
-            return HttpResponse('welcome by password')  # render(request, "user_center.html", userinfo)
+            return render(request, "users/profile.html", userinfo)
         else:
             # 登录失败
             context['loginflag'] = '1'

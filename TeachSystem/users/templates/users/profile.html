@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <title>个人中心</title>
+    <!-- 引入 WeUI -->
+    <link rel="stylesheet" href="{% static "users/css/weui/1.1.3/weui.min.css" %}"/>
+    <link rel="stylesheet" href="{% static "users/css/weui/0.4.2/weui.min.css" %}"/>
+    <script type="text/javascript" src="{% static "users/js/jquery-3.4.0.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "users/js/weui.min.js" %}"></script>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <style type="text/css">body{background-color:#efeff4}</style>
+</head>
+<body ontouchstart>
+    <div class="profile">
+        <div id="baseinfo" class="weui_cells weui_cells_access">
+            <div class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>学号</p>
+                </div>
+                <div class="weui_cell_ft">
+                    {{ s.studentId }}
+                </div>
+            </div>
+            <div class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>姓名</p>
+                </div>
+                <div class="weui_cell_ft">
+                    {{ s.username }}
+                </div>
+            </div>
+        </div>
+        <div id="detailinfo" class="weui_cells weui_cells_access">
+            <div class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>性别</p>
+                </div>
+                <div class="weui_cell_ft">
+                    {{ s.gender }}
+                </div>
+            </div>
+                        <div class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>学院</p>
+                </div>
+                <div class="weui_cell_ft">
+                    {{ s.college }}
+                </div>
+            </div>
+                        <div class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>班级</p>
+                </div>
+                <div class="weui_cell_ft">
+                    {{ s.userclass }}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
