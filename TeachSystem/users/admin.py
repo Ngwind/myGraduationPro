@@ -2,6 +2,7 @@ from collections import OrderedDict
 from import_export.admin import ImportExportModelAdmin, ImportExportMixin
 from import_export import resources
 from django.apps import apps
+from django.contrib.admin import ModelAdmin
 from django.contrib.auth.models import Group
 from django.contrib import admin, messages
 from django.contrib.auth.admin import UserAdmin
@@ -147,5 +148,6 @@ class TeacherAdmin(ImportExportMixin, UserAdmin):
 
 # ---------------openid------------------
 @admin.register(Openid)
-class OpenidAdmin(UserAdmin):
-    search_fields = ['studentid']
+class OpenidAdmin(ModelAdmin):
+    list_display = ['pk', 'openid', 'studentid', 'createdate', 'editdate']
+    # search_fields = ['studentid']

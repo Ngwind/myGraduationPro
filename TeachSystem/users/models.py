@@ -50,4 +50,4 @@ class Openid(models.Model):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return self.studentid
+        return self.studentid.__str__()

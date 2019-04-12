@@ -18,7 +18,7 @@ def login(request):
         if code:
             app_id = 'wx425d2aedb363e9c6'
             app_sercet = '57a89d10bbb0754f07b75825491b627e'
-            r_url = 'https://www.gdutwuenda.cn/user/login/'
+            r_url = 'https%3a%2f%2fwww.gdutwuenda.cn%2fuser%2flogin%2f'
             wco = WeChatOAuth(app_id, app_sercet, r_url, scope='snsapi_base', state='123')
             try:
                 json_oauth = wco.fetch_access_token(code)
