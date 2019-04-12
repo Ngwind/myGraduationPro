@@ -3,8 +3,6 @@ from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
 from .models import Student, Openid
 from wechatpy.oauth import WeChatOAuth
-import json
-
 
 def index(request):
 
@@ -23,7 +21,7 @@ def login(request):
             r_url = 'https://www.gdutwuenda.cn/user/login/'
             wco = WeChatOAuth(app_id, app_sercet, r_url, scope='snsapi_base', state='123')
             json_oauth = wco.fetch_access_token(code)
-            openid = json.loads(json_oauth)['openid']
+            openid = json_oauth['openid']
             try:  # 在数据库中校验有无openid对应的学生信息
                 o = Openid.objects.get(openid=openid)
                 s = o.studentid  # 获取openid对应的学生models对象
