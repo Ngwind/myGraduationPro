@@ -47,7 +47,7 @@ def login(request):
         if check:
             # 登录成功
             if openid != '0':  # 判断一次，防止保存值为0的openid
-                porc =  Openid.objects.update_or_create(openid=openid, studentid=s)  # 保存openid和账号信息。
+                porc =  Openid.objects.update_or_create(defaults={"openid": openid}, studentid=s)  # 保存openid和账号信息。
             userinfo = {"s": s}
             return render(request, "users/profile.html", userinfo)
         else:
@@ -57,7 +57,15 @@ def login(request):
     return render(request, "users/login.html", context)
 
 
-def user_center(request):
-    """接受一个表单，校验登录"""
-    return HttpResponse('登录成功！')
-
+def logout(request):
+    """接受一个openid，解绑openid和studentid关系，退出登录"""
+    if request.method == "GET":
+        studentid = request.GET.get("studentid")
+        if studentid != None:
+            try:
+                Openid.objects.get(studentid=Student.objects.get(studentId=studentid)).delete()
+                return HttpResponse('ok')
+            except Exception:
+                return HttpResponse('error')
+    else:
+        return HttpResponse(status=400)

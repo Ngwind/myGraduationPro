@@ -19,17 +19,13 @@
                 <div class="weui_cell_bd weui_cell_primary">
                     <p>学号</p>
                 </div>
-                <div class="weui_cell_ft">
-                    {{ s.studentId }}
-                </div>
+                <div id="studentid" class="weui-cell__ft">{{ s.studentId }}</div>
             </div>
             <div class="weui_cell">
                 <div class="weui_cell_bd weui_cell_primary">
                     <p>姓名</p>
                 </div>
-                <div class="weui_cell_ft">
-                    {{ s.username }}
-                </div>
+                <div id="username" class="weui-cell__ft">\{{ s.username }}\</div>
             </div>
         </div>
         <div id="detailinfo" class="weui_cells weui_cells_access">
@@ -37,27 +33,60 @@
                 <div class="weui_cell_bd weui_cell_primary">
                     <p>性别</p>
                 </div>
-                <div class="weui_cell_ft">
-                    {{ s.gender }}
+                <div class="weui-cell__ft">
+                    {% ifequal s.gender "male" %}
+                        男
+                    {% else %}
+                        {% ifequal s.gender "female" %}
+                            女
+                        {% else %}
+                            未知
+                        {% endifequal %}
+                    {% endifequal %}
                 </div>
             </div>
-                        <div class="weui_cell">
+            <div class="weui_cell">
                 <div class="weui_cell_bd weui_cell_primary">
                     <p>学院</p>
                 </div>
-                <div class="weui_cell_ft">
+                <div class="weui-cell__ft">
                     {{ s.college }}
                 </div>
             </div>
-                        <div class="weui_cell">
+            <div class="weui_cell">
                 <div class="weui_cell_bd weui_cell_primary">
                     <p>班级</p>
                 </div>
-                <div class="weui_cell_ft">
+                <div class="weui-cell__ft">
                     {{ s.userclass }}
                 </div>
             </div>
         </div>
+        <div id="courseinfo" class="weui_cells weui_cells_access">
+            <div class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>我的课程</p>
+                </div>
+                <div class="weui_cell_ft">
+                    点击查看
+                </div>
+            </div>
+        </div>
+        <div id="setting" class="weui_cells weui_cells_access">
+            <div class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>更多</p>
+                </div>
+                <div class="weui_cell_ft">
+
+                </div>
+            </div>
+        </div>
+        <div id="signout" class="weui_btn_area">
+            <a href="javascript:;" class="weui-btn weui-btn_primary">退出登录</a>
+        </div>
     </div>
+
+    <script type="text/javascript" src="{% static "users/js/center.js" %}"></script>
 </body>
 </html>
