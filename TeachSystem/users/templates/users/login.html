@@ -7,6 +7,7 @@
     <!-- 引入 WeUI -->
     <script type="text/javascript">
         var flag = {{ loginflag|safe }}
+        var openid = {{ openid|safe }}
     </script>
     <link rel="stylesheet" href="{% static "users/css/weui/1.1.3/weui.min.css" %}"/>
     <link rel="stylesheet" href="{% static "users/css/weui/0.4.2/weui.min.css" %}"/>
@@ -52,7 +53,7 @@
                 <a id="login" href="javascript:;" class="weui_btn weui_btn_primary js_btn">登录
                 </a>
             </div>
-
+        <input type="hidden" name="openid" value="{{ openid }}"/>
         </form>
     </div>
 </div>
