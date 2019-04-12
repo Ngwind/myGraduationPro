@@ -6,7 +6,7 @@ from django.contrib.auth.models import Group
 from django.contrib import admin, messages
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.hashers import make_password
-from .models import Teacher, Student
+from .models import Teacher, Student, Openid
 from courses.models import CourseProgress, Video, Scores, Course  # 忽略这些红色波浪线，其实是正确的
 
 
@@ -143,3 +143,9 @@ class TeacherAdmin(ImportExportMixin, UserAdmin):
         update_row = queryset.update(password=init_password_sercet)
         self.message_user(request, str(update_row)+"个用户密码成功初始化为"+init_password, fail_silently=False)
     set_init_password.short_description = "将选中用户密码初始化"
+
+
+# ---------------openid------------------
+@admin.register(Openid)
+class OpenidAdmin(UserAdmin):
+    search_fields = ['studentid']
