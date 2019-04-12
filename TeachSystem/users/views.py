@@ -44,7 +44,6 @@ def login(request):
             # 登录成功
             if openid != '0':  # 判断一次，防止保存值为0的openid
                 porc =  Openid.objects.update_or_create(openid=openid, studentid=s)  # 保存openid和账号信息。
-                print(porc)
             userinfo = {"s": s}
             return HttpResponse('welcome by password')  # render(request, "user_center.html", userinfo)
         else:
