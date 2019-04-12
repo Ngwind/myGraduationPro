@@ -23,6 +23,7 @@ def login(request):
             try:
                 json_oauth = wco.fetch_access_token(code)
             except WeChatOAuthException:  # 考虑code被重复使用的情况，重定向到微信授权url
+                print(wco.authorize_url)
                 return HttpResponseRedirect(redirect_to=wco.authorize_url)
 
             openid = json_oauth['openid']
