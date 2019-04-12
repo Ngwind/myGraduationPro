@@ -24,7 +24,7 @@ def login(request):
                 json_oauth = wco.fetch_access_token(code)
             except WeChatOAuthException:  # 考虑code被重复使用的情况，重定向到微信授权url
                 print(wco.authorize_url)
-                return HttpResponseRedirect(redirect_to=wco.authorize_url)
+                return HttpResponseRedirect(redirect_to='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx425d2aedb363e9c6&redirect_uri=https%3a%2f%2fwww.gdutwuwenda.cn%2fuser%2flogin%2f&response_type=code&scope=snsapi_base&state=123#wechat_redirect')
 
             openid = json_oauth['openid']
             try:  # 在数据库中校验有无openid对应的学生信息
