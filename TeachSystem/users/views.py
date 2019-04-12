@@ -67,5 +67,7 @@ def logout(request):
                 return HttpResponse('ok')
             except Exception:
                 return HttpResponse('error')
+        else:
+            return HttpResponse(status=403)
     else:
         return HttpResponse(status=400)

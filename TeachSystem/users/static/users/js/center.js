@@ -22,7 +22,7 @@ $(document).ready(function () {
                             let studentid = $('#studentid').text()
                             console.log(studentid)
                             if(studentid){
-                                $.get('/user/logout/', function (response) {
+                                $.get('/user/logout/', {studentid: studentid}, function (response) {
                                     if(response=="ok"){
                                     $(location).prop('href', 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx425d2aedb363e9c6&redirect_uri=https%3a%2f%2fwww.gdutwuwenda.cn%2fuser%2flogin%2f&response_type=code&scope=snsapi_base&state=123#wechat_redirect')
                                     }else {
