@@ -1,8 +1,8 @@
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render, render_to_response, HttpResponseRedirect
 from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
 from .models import Student, Openid
-from wechatpy.oauth import WeChatOAuth
+from wechatpy.oauth import WeChatOAuth, WeChatOAuthException
 
 def index(request):
 
@@ -20,7 +20,11 @@ def login(request):
             app_sercet = '57a89d10bbb0754f07b75825491b627e'
             r_url = 'https://www.gdutwuenda.cn/user/login/'
             wco = WeChatOAuth(app_id, app_sercet, r_url, scope='snsapi_base', state='123')
-            json_oauth = wco.fetch_access_token(code)
+            try:
+                json_oauth = wco.fetch_access_token(code)
+            except WeChatOAuthException:  # 考虑code被重复使用的情况，重定向到微信授权url
+                return HttpResponseRedirect(redirect_to=wco.authorize_url)
+
             openid = json_oauth['openid']
             try:  # 在数据库中校验有无openid对应的学生信息
                 o = Openid.objects.get(openid=openid)
