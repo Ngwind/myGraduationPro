@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    let studentid = $('#studentid').text()
+    let studentid = $('#studentid').text();
     // 注销登录按钮
     $("#signout").click(function () {
         weui.confirm("确认退出登录吗？",

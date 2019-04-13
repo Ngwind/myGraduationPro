@@ -33,6 +33,7 @@ $(document).ready(function () {
                                             }else {
                                                     if(data == "pwderror"){
                                                         weui.topTips('原密码错误，修改密码失败', 2000);
+                                                        document.getElementById('old_password').focus()
                                                     }else {
                                                         weui.topTips('未知错误，修改密码失败', 2000);
                                                     }

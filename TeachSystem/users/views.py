@@ -117,6 +117,7 @@ def change_pwd(request):
                 n = Student.objects.filter(studentId=studentid, password=old_password)
                 if len(n) == 1:
                     n.update(password=new_password)
+                    Openid.objects.get(studentid=Student.objects.get(studentId=studentid)).delete()
                     return HttpResponse("success")
             except ObjectDoesNotExist:
                 return HttpResponse("pwderror")
