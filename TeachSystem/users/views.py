@@ -5,10 +5,23 @@ from .models import Student, Openid
 from wechatpy.oauth import WeChatOAuth, WeChatOAuthException
 
 def index(request):
-
     return HttpResponse(request.path)
 
 
+# 通用登录状态验证函数
+def is_login(studentid):
+    try:  # 查找openid表中，是否存在islogin='yes'的学生。
+        Openid.objects.get(studentid=Student.objects.get(studentId=studentid)) #, islogin="yes")
+        return True
+    except Exception:
+        return False
+    return False
+
+# 返回未登录弹窗页面
+def no_login(request):
+    return render(request, "users/nologin.html")
+
+# 返回静态登录页面或者重定向到个人中心
 def login(request):
     """返回静态登录页面或者重定向到个人中心"""
     context = {'loginflag': '0',
@@ -47,7 +60,7 @@ def login(request):
         if check:
             # 登录成功
             if openid != '0':  # 判断一次，防止保存值为0的openid
-                porc =  Openid.objects.update_or_create(defaults={"openid": openid}, studentid=s)  # 保存openid和账号信息。
+                porc =  Openid.objects.update_or_create(defaults={"openid": openid, "islogin":"yes"}, studentid=s)  # 保存openid和账号信息。
             userinfo = {"s": s}
             return render(request, "users/profile.html", userinfo)
         else:
@@ -56,7 +69,7 @@ def login(request):
             context['openid'] = openid  # 再次带上openid
     return render(request, "users/login.html", context)
 
-
+# 接受一个openid，解绑openid和studentid关系，退出登录
 def logout(request):
     """接受一个openid，解绑openid和studentid关系，退出登录"""
     if request.method == "GET":
@@ -71,3 +84,40 @@ def logout(request):
             return HttpResponse(status=403)
     else:
         return HttpResponse(status=400)
+
+# 返回更多操作list页
+def more_settings(request):
+    if request.method == "GET":
+        studentid = request.GET.get('studentid')
+        if studentid:
+            if is_login(studentid):
+                return render(request, "users/more.html", context={'studentid': studentid})
+            else:
+                return HttpResponseRedirect("/user/nologin")
+    return HttpResponse(status=403)
+
+# 返回修改密码页
+def re_change_pwd(request):
+    if request.method == "GET":
+        studentid = request.GET.get('studentid')
+        if studentid:
+            if is_login(studentid):
+                return render(request,"users/changepwd.html", context={"studentid": studentid})
+    return HttpResponse(status=403)
+
+# 修改密码函数
+def change_pwd(request):
+    if request.method == "POST":
+        studentid = request.POST.get('studentid')
+        old_password = request.POST.get('old_password')
+        new_password = request.POST.get('new_password')
+        if studentid and old_password and new_password and is_login(studentid):
+            try:
+                Student.objects.get(studentId=studentid, password=old_password)
+                n = Student.objects.filter(studentId=studentid, password=old_password)
+                if len(n) == 1:
+                    n.update(password=new_password)
+                    return HttpResponse("success")
+            except ObjectDoesNotExist:
+                return HttpResponse("pwderror")
+    return HttpResponse("error")

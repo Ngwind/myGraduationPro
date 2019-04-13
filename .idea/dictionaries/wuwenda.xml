@@ -15,6 +15,7 @@
       <w>diff</w>
       <w>display</w>
       <w>editable</w>
+      <w>error</w>
       <w>export</w>
       <w>extra</w>
       <w>field</w>
@@ -25,6 +26,7 @@
       <w>instance</w>
       <w>item</w>
       <w>list</w>
+      <w>loading</w>
       <w>loginfail</w>
       <w>loginflag</w>
       <w>make</w>

@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <title>修改密码</title>
+    <!-- 引入 WeUI -->
+    <link rel="stylesheet" href="{% static "users/css/weui/1.1.3/weui.min.css" %}"/>
+    <link rel="stylesheet" href="{% static "users/css/weui/0.4.2/weui.min.css" %}"/>
+    <script type="text/javascript" src="{% static "users/js/jquery-3.4.0.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "users/js/weui.min.js" %}"></script>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <style type="text/css">body{background-color:#efeff4}</style>
+    <script type="text/javascript">
+        var studentid = {{ studentid|safe }}
+    </script>
+</head>
+<body ontouchstart>
+    <div id="container">
+        <form id="changepwd" method="post">
+            {% csrf_token %}
+            <div class="weui_cells_title">修改登录密码</div>
+            <div class="weui_cells weui_cells_form">
+                <div class="weui_cell">
+                    <div class="weui_cell_hd">
+                        <label for="" class="weui_label">学号</label>
+                    </div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <label id="studentid" for="" class="weui_label">3115001441</label></div>
+
+                </div>
+                <div class="weui_cell">
+                <div class="weui_cell_hd">
+                    <label for="" class="weui_label">原密码</label>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <input id="old_password" type="password" name="old_password" class="weui_input" required="" pattern="[\w]{6,}" notmatchtips="密码至少6位" placeholder="填写原密码"></div>
+
+            </div></div>
+            <div class="weui_cells_title">请输入两次新密码</div>
+            <div class="weui_cells weui_cells_form">
+                <div class="weui_cell">
+                    <div class="weui_cell_hd">
+                        <label for="" class="weui_label">新密码</label>
+                    </div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input id="new_password_f" type="password" name="password_f" class="weui_input" required pattern="[\w]{6,}" notmatchtips="密码至少6位" placeholder="填写新密码"></div>
+                    <div class="weui_cell_ft">
+                        <i class="weui_icon_warn"></i>
+                    </div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_hd">
+                        <label for="" class="weui_label">确认密码</label>
+                    </div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input id="new_password_s" type="password" name="password" class="weui_input" required pattern="[\w]{6,}" notmatchtips="密码至少6位" placeholder="再次填写确认"></div>
+                    <div class="weui_cell_ft">
+                        <i class="weui_icon_warn"></i>
+                    </div>
+                </div>
+            </div>
+            <p class="weui_cells_tips">成功修改密码后，需要重新登录</p>
+            <div class="weui_btn_area">
+                <a id="login" href="javascript:;" class="weui_btn weui_btn_primary js_btn">完成
+                </a>
+            </div>
+        </form>
+    </div>
+<script type="text/javascript" src="{% static "users/js/chpwd.js" %}"></script>
+</body>
+</html>

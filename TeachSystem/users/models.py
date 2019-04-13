@@ -42,6 +42,7 @@ class Teacher(AbstractUser):
 class Openid(models.Model):
     openid = models.CharField('openid', max_length=200, default=None)
     studentid = models.ForeignKey('Student', on_delete=models.CASCADE, verbose_name="学号")
+    islogin = models.CharField('登录状态', max_length=10, default="no")
     createdate = models.DateTimeField("添加时间", auto_now_add=True)
     editdate = models.DateTimeField("修改时间", auto_now=True)
 

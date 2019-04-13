@@ -16,7 +16,7 @@ $(document).ready(function () {
                 setTimeout(function () {
                     loading.hide();
                     document.getElementById('registerForm').submit();
-                }, 500);
+                }, 3000);
             }
         });
     });
