@@ -7,7 +7,7 @@ from users.views import no_login,is_login
 
 
 def index(request):
-    return HttpResponse(request.path)
+    return render(request, "courses/testvideo.html")
 
 
 # 通用openid获取函数
