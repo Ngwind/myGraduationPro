@@ -1,9 +1,8 @@
-from django.shortcuts import render, HttpResponseRedirect
-from django.http import HttpResponse
+from django.shortcuts import render
 from wechatpy.oauth import WeChatOAuth, WeChatOAuthException
-from .models import Course,Scores
+from .models import Scores, Video, CourseProgress
 from users.models import Openid
-from users.views import no_login,is_login
+from users.views import no_login, is_login
 
 
 def index(request):
@@ -31,18 +30,43 @@ def get_openid(request):
 def re_course_list(request):
     context = {'Courses': []}
     studentid = request.GET.get('studentid')
+
     if studentid and is_login(studentid):  # 个人中心转跳,拿studentid
         for s in Scores.objects.filter(student__studentId=studentid):
-            context['Courses'].append(s.course)  # 保存student的所有course
-        return render(request, "courses/learning.html", context)  # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!页面要换掉
+            c = s.course
+            stu = s.student
+            t = Video.objects.filter(course=c).count()
+            per_sum = 0
+            for l in CourseProgress.objects.filter(student=stu, video__course=c):
+                str_p = l.progress
+                per_sum += float(str_p[0: len(str_p) - 1])
+            try:
+                complate_per = round(per_sum / t, 2)
+            except ZeroDivisionError:
+                complate_per = round(0, 2)
+            context['Courses'].append([c, complate_per])  # 保存student的所有course
+        return render(request, "courses/courselist.html", context)
+
     else:  # 公众号菜单转跳,拿openid
         openid = get_openid(request)
         try:
             op = Openid.objects.get(openid=openid)
             if openid != "error":  # 验证登录有效
                 for s in Scores.objects.filter(student=op.studentid):
-                    context['Courses'].append(s.course)
-                return render(request, "courses/learning.html", context)  # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!页面要换掉
+                    c = s.course
+                    stu = s.student
+                    t = Video.objects.filter(course=c).count()
+                    per_sum = 0
+                    for l in CourseProgress.objects.filter(student=stu, video__course=c):
+                        str_p = l.progress
+                        per_sum += float(str_p[0: len(str_p)-1])
+                    try:
+                        complate_per = round(per_sum/t, 2)
+                    except ZeroDivisionError:
+                        complate_per = round(0, 2)
+                    context['Courses'].append([c, complate_per])
+
+                return render(request, "courses/courselist.html", context)
         except Exception:
             return no_login(request)
 

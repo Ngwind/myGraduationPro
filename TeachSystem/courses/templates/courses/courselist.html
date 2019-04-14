@@ -13,6 +13,26 @@
     <style type="text/css">body{background-color:#efeff4}</style>
 </head>
 <body ontouchstart>
+    <div class="container">
+        <div class="weui-panel">
+            <div class="weui-panel__hd">我的课程列表</div>
+            <div class="weui-panel__bd">
+                {% for c in Courses %}
+                    <div class="weui-media-box weui-media-box_text">
+                    <h4 class="weui-media-box__title">《{{ c.0.courseName }}》</h4>
+                    <p class="weui-media-box__desc">课程介绍:暂无介绍。</p>
+                    <ul class="weui-media-box__info">
+                        <li class="weui-media-box__info__meta">发布人:{{ c.0.publisher }}</li>
+                        <li class="weui-media-box__info__meta">{{ c.0.createdate|date }}</li>
+                        <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">已学习:{{ c.1 }}%</li>
+                    </ul>
+                </div>
+                {% empty %}
+                    <p>你好像还没有需要学习的课程。</p>
+                {% endfor %}
 
+            </div>
+        </div>
+    </div>
 </body>
 </html>
