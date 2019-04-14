@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="zh-cmn-Hans">
+<html lang="zh-cmn-Hans" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>个人中心</title>
@@ -63,20 +63,19 @@
             </div>
         </div>
         <div id="courseinfo" class="weui_cells weui_cells_access">
-            <div class="weui_cell">
+            <a href="/course/courselist/?student={{ s.studentId }}" class="weui_cell">
                 <div class="weui_cell_bd weui_cell_primary">
                     <p>我的课程</p>
                 </div>
                 <div class="weui_cell_ft"></div>
-            </div>
+            </a>
         </div>
         <div id="setting" class="weui_cells weui_cells_access">
             <a id="moresettings" class="weui_cell">
                 <div class="weui_cell_bd weui_cell_primary">
                     <p>更多</p>
                 </div>
-                <div class="weui_cell_ft">
-                </div>
+                <div class="weui_cell_ft"></div>
             </a>
         </div>
         <div id="signout" class="weui_btn_area">

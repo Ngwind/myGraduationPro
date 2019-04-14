@@ -6,9 +6,12 @@
       <w>admin</w>
       <w>after</w>
       <w>binding</w>
+      <w>changepwd</w>
       <w>click</w>
       <w>column</w>
       <w>context</w>
+      <w>courselist</w>
+      <w>courses</w>
       <w>data</w>
       <w>description</w>
       <w>dict</w>
@@ -25,12 +28,16 @@
       <w>headers</w>
       <w>instance</w>
       <w>item</w>
+      <w>learning</w>
       <w>list</w>
       <w>loading</w>
       <w>loginfail</w>
       <w>loginflag</w>
       <w>make</w>
       <w>model</w>
+      <w>modpwd</w>
+      <w>moresettings</w>
+      <w>nologin</w>
       <w>order</w>
       <w>ordering</w>
       <w>resource</w>

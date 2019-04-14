@@ -14,7 +14,7 @@
 </head>
 <body ontouchstart>
     <script type="text/javascript">
-        weui.alert('用户未登录！', function(){
+        weui.alert('用户未登录！请先登录！', function(){
             $(location).prop('href', 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx425d2aedb363e9c6&redirect_uri=https%3a%2f%2fwww.gdutwuwenda.cn%2fuser%2flogin%2f&response_type=code&scope=snsapi_base&state=123#wechat_redirect')
         });
     </script>
