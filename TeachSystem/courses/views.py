@@ -45,6 +45,7 @@ def re_course_list(request):
             except ZeroDivisionError:
                 complate_per = round(0, 2)
             context['Courses'].append([c, complate_per])  # 保存student的所有course
+        context['studentid'] = studentid
         return render(request, "courses/courselist.html", context)
 
     else:  # 公众号菜单转跳,拿openid
@@ -65,9 +66,16 @@ def re_course_list(request):
                     except ZeroDivisionError:
                         complate_per = round(0, 2)
                     context['Courses'].append([c, complate_per])
-
+                context['studentid'] = op.studentid.studentId
                 return render(request, "courses/courselist.html", context)
         except Exception:
             return no_login(request)
+
+
+# 返回视频观看页面
+def re_video_list(request):
+    context = {"videos": ["v", "learningtime"]}
+    print(request.GET.get("studentid")+request.GET.get('courseid'))
+    return render(request, "courses/learning.html", context)
 
 

@@ -14,10 +14,11 @@
 </head>
 <body ontouchstart>
     <div class="container">
-        <div class="weui-panel">
+        <div class="weui-panel weui-panel_access">
             <div class="weui-panel__hd">我的课程列表</div>
             <div class="weui-panel__bd">
                 {% for c in Courses %}
+                    <a href="/course/learning/?studentid={{ studentid }}&courseid={{ c.0.pk }}" style="color:black" >
                     <div class="weui-media-box weui-media-box_text">
                         <h4 class="weui-media-box__title">《{{ c.0.courseName }}》</h4>
                         <p class="weui-media-box__desc">课程介绍:暂无介绍。</p>
@@ -27,6 +28,7 @@
                             <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">已学习:{{ c.1 }}%</li>
                         </ul>
                     </div>
+                    </a>
                 {% empty %}
                     <div class="weui-media-box weui-media-box_text">
                     <h4 class="weui-media-box__title"></h4>
