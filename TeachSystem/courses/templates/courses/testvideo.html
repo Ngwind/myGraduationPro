@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{% static "courses/css/chimee-mobile-player.browser.css" %}"/>
     <link rel="stylesheet" href="{% static "users/css/weui/1.1.3/weui.min.css" %}"/>
     <link rel="stylesheet" href="{% static "users/css/weui/0.4.2/weui.min.css" %}"/>
-{#    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chimee/0.11.0/index.browser.js"></script>#}
+    {#    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chimee/0.11.0/index.browser.js"></script>#}
     <script type="text/javascript" src="{% static "courses/js/chimee-mobile-player.browser.js" %}"></script>
     <script type="text/javascript" src="{% static "users/js/jquery-3.4.0.min.js" %}"></script>
     <script type="text/javascript" src="{% static "users/js/weui.min.js" %}"></script>
@@ -20,36 +20,35 @@
 </head>
 <body ontouchstart>
 <div container>
-        <div id="wrapper">
+    <div id="wrapper">
 
+    </div>
+    <div class="weui-tab">
+        <!--课程视频播放标题头-->
+        <div class="weui-navbar">
+            <div class="weui-navbar__item">
+                课程视频列表
+            </div>
         </div>
-        <div class="weui-tab">
-            <!--课程视频播放标题头-->
-            <div class="weui-navbar">
-                <div class="weui-navbar__item">
-                    课程视频列表
-                </div>
-            </div>
-            <!--课程视频播放列表-->
-            <div class="weui-cells weui-tab__panel " style="margin-top:0">
+        <!--课程视频播放列表-->
+        <div class="weui-cells weui-tab__panel " style="margin-top:0">
 
-            </div>
         </div>
     </div>
+</div>
 </body>
 <script type="text/javascript">
-    new ChimeeMobilePlayer({
-  wrapper: '#wrapper',  // video dom容器
-  src: 'http://cdn.toxicjohann.com/lostStar.mp4',
-  autoplay: true,
-  controls: true,
-  playsInline: true,
-  preload: 'auto',
-  x5VideoPlayerFullscreen: true,
-  x5VideoOrientation: 'landscape|portrait',
-  xWebkitAirplay: true,
-  muted: true,
-  // removeInnerPlugins: ['chimeeMobiControlbar', 'chimeeState'] // 需要移除的插件
-});
+    let p = new ChimeeMobilePlayer({
+        wrapper: '#wrapper',  // video dom容器
+        src: 'http://cdn.toxicjohann.com/lostStar.mp4',
+        autoplay: false,
+        controls: true,
+        playsInline: true,
+        preload: 'auto',
+        x5VideoPlayerFullscreen: true,
+        x5VideoOrientation: 'landscape|portrait',
+        xWebkitAirplay: true,
+        // removeInnerPlugins: ['chimeeMobiControlbar', 'chimeeState'] // 需要移除的插件
+    });
 </script>
 </html>
