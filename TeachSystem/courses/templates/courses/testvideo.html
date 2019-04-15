@@ -36,9 +36,11 @@
         </div>
     </div>
 </div>
+<button onclick="btn()">点击</button>
 </body>
 <script type="text/javascript">
-    let p = new ChimeeMobilePlayer({
+    function btn(){
+        let p = new ChimeeMobilePlayer({
         wrapper: '#wrapper',  // video dom容器
         src: 'http://cdn.toxicjohann.com/lostStar.mp4',
         autoplay: false,
@@ -62,5 +64,6 @@
             }
         }]
     });
+    }
 </script>
 </html>
