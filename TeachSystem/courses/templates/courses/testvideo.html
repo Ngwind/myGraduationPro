@@ -49,6 +49,18 @@
         x5VideoOrientation: 'landscape|portrait',
         xWebkitAirplay: true,
         // removeInnerPlugins: ['chimeeMobiControlbar', 'chimeeState'] // 需要移除的插件
+        plugin: [{
+            name: 'chimeeMobiControlbar',
+            majorColor: '',
+            hoverColor: '#008080',
+            children: {
+                play: true, // 底部播放暂停按钮
+                currentTime: true, // 播放时间
+                progressBar: false, // 播放进度控制条
+                totalTime: true, // 总时间
+                screen: true // 全屏控制
+            }
+        }]
     });
 </script>
 </html>
