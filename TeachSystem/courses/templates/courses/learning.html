@@ -10,17 +10,138 @@
     <script type="text/javascript" src="{% static "users/js/jquery-3.4.0.min.js" %}"></script>
     <script type="text/javascript" src="{% static "users/js/weui.min.js" %}"></script>
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
-    <style type="text/css">body{background-color:#efeff4}</style>
+    <style type="text/css">body {
+        background-color: #efeff4
+    }</style>
 </head>
 <body ontouchstart>
-    <div container>
-        <div class="player">
-            <video  style="width:100%; height:100%; object-fit:contain"
-                    controls
-                    preload="auto"
-                    src="http://cdn.toxicjohann.com/lostStar.mp4"
-                    type="video/mp4"
-                    webkit-playsinline playsinline x5-playsinline>您的浏览器不支持 video 标签。
+<div container>
+    <div class="player">
+        <video id="video"
+               style="width:100%; height:100%; object-fit:contain"
+               controls
+               preload="auto"
+               src=""
+               type="video/mp4"
+               webkit-playsinline playsinline x5-playsinline>您的浏览器不支持 video 标签。
+        </video>
+    </div>
+    <div class="weui-tab">
+        <!--课程视频播放标题头-->
+        <div class="weui-navbar">
+            <div class="weui-navbar__item">
+                课程视频列表
+            </div>
+        </div>
+        <!--课程视频播放列表-->
+        <div class="weui-cells weui-tab__panel " style="margin-top:0">
+            {% for v in videos %}
+                <a id="{{ v.0.pk }}" class="weui-cell weui-cell_access" href="javascript:;">
+                    <div class="weui-cell__bd">
+                        <p>{{ v.0.chapterId }}:{{ v.0.videoName }}</p>
+                    </div>
+                    <div class="weui-cell__ft">
+                        {% if v.1 == "100.0%" %}
+                            已学:100%
+                        {% endif %}
+                        {% if v.1 == "0%" %}
+                            未学习
+                        {% else %}
+                            已学:{{ v.1 }}
+                        {% endif %}
+                    </div>
+                </a>
+            {% empty %}
+                <script type="text/javascript">
+                    weui.alert("老师还没添加任何视频~", function () {
+                        history.back();
+                    })
+                </script>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var studentid = {{ studentid|safe }};
+    var playingvideoid = null;
+    var video = document.getElementById("video");
+    document.addEventListener("visibilitychange", function () {
+        if (document.visibilityState == "visible") {
+            video.play();
+        }
+        if (document.visibilityState == "hidden") {
+            video.pause();
+        }
+    });
+    var last = 0;
+    var lastsend = 0;
+    var fnh = 0;
+    $('a.weui-cell_access').bind('click', function (e) {
+        console.log(this);
+        let a = this.id
+        let loading = weui.loading("加载中...");
+        setTimeout(function () {
+            $.get("/course/getvurl/?vid=" + a, function (response, status) {
+                console.log(response, status)
+                $('#video').prop("src", response);
+                last = 0;
+                lastsend = 0;
+                fnh = 0;
+                video.play();
+            });
+            playingvideoid = a;
+            loading.hide(function () {
+                console.log('`loading` has been hidden');
+            });
+        }, 2000);
+    });
+    //当目前的播放位置已更改时
+    video.ontimeupdate = function () {
+        var current = video.currentTime;
+        if (current - last > 2) {
+            video.currentTime = last;
+            //last = current;
+        } else {
+            last = current;
+            if (last - lastsend > 10) {
+                lastsend = last;
+                console.log(last);
+                setTimeout(function () {
+                    $.get("/course/setprogress/?vid=" + playingvideoid + "&studentid=" + studentid + "&nt=" + current.toString() + "&dt=" + (video.duration).toString(),
+                        function (response, status) {
+                            console.log(response, status);
+                            if (response != "nologin") {
+                                $('#' + playingvideoid).children("div.weui-cell__ft").text("已学:" + response);
+                            } else {
+                                weui.alert("登录状态无效，请重新登录！", function () {
+                                    $(location).prop('href', 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx425d2aedb363e9c6&redirect_uri=https%3a%2f%2fwww.gdutwuwenda.cn%2fuser%2flogin%2f&response_type=code&scope=snsapi_base&state=123#wechat_redirect');
+                                });
+                            }
+                        });
+                }, 3000);//更新观看进度
+            }
+            if (video.duration - current < 1 && fnh == 0) {
+                fnh = 1;
+                console.log("end");//更新观看进度100%
+                setTimeout(function () {
+                    $.get("/course/setprogress/?vid=" + playingvideoid + "&studentid=" + studentid + "&nt=" + (video.duration).toString() + "&dt=" + (video.duration).toString(),
+                        function (response, status) {
+                            console.log(response, status);
+                            if (response != "nologin") {
+                                $('#' + playingvideoid).children("div.weui-cell__ft").text("已学:" + response);
+                            } else {
+                                weui.alert("登录状态无效，请重新登录！", function () {
+                                    $(location).prop('href', 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx425d2aedb363e9c6&redirect_uri=https%3a%2f%2fwww.gdutwuwenda.cn%2fuser%2flogin%2f&response_type=code&scope=snsapi_base&state=123#wechat_redirect');
+                                });
+                            }
+                        });
+                }, 3000);
+            }
+        }
+    };
+</script>
+</body>
+</html>
 {% comment %}
 "http://vjs.zencdn.net/v/oceans.mp4 "
 "https://media.w3.org/2010/05/sintel/trailer.mp4"
@@ -31,40 +152,4 @@
 "https://player.vimeo.com/external/188355959.sd.mp4?s=e5eea0f749282013db81a7e5cd047c57e066e2b9&amp;profile_id=164"
 "https://player.vimeo.com/external/188365455.sd.mp4?s=7343acee6a02371b4ffeb25760bcbf4b627ccadd&amp;profile_id=164"
 "https://player.vimeo.com/external/188421287.sd.mp4?s=bdbf8a61c40502211971571fef384f52fe79dbbe&amp;profile_id=164"
-{% endcomment %}</video>
-        </div>
-        <div class="weui-tab">
-            <!--课程视频播放标题头-->
-            <div class="weui-navbar">
-                <div class="weui-navbar__item">
-                    课程视频列表
-                </div>
-            </div>
-            <!--课程视频播放列表-->
-            <div class="weui-cells weui-tab__panel " style="margin-top:0">
-                {% for v in videos %}
-                    <a id="{{ v.0.pk }}"class="weui-cell weui-cell_access" href="javascript:;">
-                        <div class="weui-cell__bd">
-                            <p>{{ v.0.chapterId }}:{{ v.0.videoName }}</p>
-                        </div>
-                        <div class="weui-cell__ft">
-                            {% if v.1 == "0%" %}
-                                未学习
-                            {% else %}
-                                已学:{{ v.1 }}
-                            {% endif %}
-                        </div>
-                </a>
-                {% empty %}
-                    <script type="text/javascript">
-                        weui.alert("老师还没添加任何视频~", function () {
-                            history.back();
-                        })
-                    </script>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-</body>
-</html>
-
+{% endcomment %}

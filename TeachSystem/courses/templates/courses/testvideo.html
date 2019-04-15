@@ -46,14 +46,33 @@
 </body>
 <script type="text/javascript">
     var video = document.getElementById("video");
+    document.addEventListener("visibilitychange", function () {
+        if (document.visibilityState == "visible") {
+            video.play();
+        }
+        if (document.visibilityState == "hidden") {
+            video.pause();
+        }
+    });
     var last = 0;
+    var lastsend = 0;
+    var fnh = 0;
     //当目前的播放位置已更改时
     video.ontimeupdate = function () {
         var current = video.currentTime;
         if (current - last > 2) {
-            video.currentTime = last;
+            //video.currentTime = last;
+            last = current;
         } else {
             last = current;
+            if (last - lastsend > 10) {
+                lastsend = last;
+                console.log(last);//更新观看进度
+            }
+            if (video.duration - current < 1 && fnh == 0) {
+                fnh = 1;
+                console.log("end");//更新观看进度100%
+            }
         }
     };
 </script>

@@ -89,8 +89,49 @@ def re_video_list(request):
             print(t)
             time_s = t[0].progress  # 观看进度
             context['videos'].append([v, time_s])  # 保存video和观看进度到context
-
+        context['studentid'] = studentid
         return render(request, "courses/learning.html", context)
 
     else:
         return HttpResponse(status=403)
+
+
+# 获取前端视频vid，返回url字符串
+def re_video_url(request):
+    videoid = request.GET.get("vid")
+    if videoid and request.method == "GET":
+        try:
+            vurl = Video.objects.get(pk=videoid).videoUrl
+            print(vurl)
+            return HttpResponse(vurl)
+        except Exception:
+            return HttpResponse("")
+    return HttpResponse(status=403)
+
+
+# 获取前端studentid、vid、观看进度，返回进度结果
+def re_learn_progress(request):
+    studentid = request.GET.get("studentid")
+    videoid = request.GET.get("vid")
+    now_t = request.GET.get("nt")
+    dur_t = request.GET.get("dt")
+    if request.method == "GET" and studentid and videoid and now_t and dur_t:
+        if is_login(studentid):
+            try:
+                f_p = float(now_t[0:len(now_t)-1]) / float(dur_t[0:len(dur_t)-1]) * 100
+                if f_p == 100:
+                    s_p = "100%"
+                else:
+                    s_p = str(round(f_p, 2))+"%"
+                cp = CourseProgress.objects.filter(video__pk=videoid, student__studentId=studentid)
+                cp_s = cp[0].progress
+                if float(cp_s[0:len(cp_s)-1]) <= f_p:
+                    cp.update(progress=s_p)
+                else:
+                    return HttpResponse(cp_s)
+                return HttpResponse(s_p)
+            except Exception:
+                return HttpResponse("error")
+        else:
+            return HttpResponse("nologin")
+    return HttpResponse(403)

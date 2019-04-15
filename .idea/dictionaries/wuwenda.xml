@@ -27,6 +27,7 @@
       <w>fields</w>
       <w>filter</w>
       <w>first</w>
+      <w>getvurl</w>
       <w>headers</w>
       <w>instance</w>
       <w>item</w>
@@ -52,8 +53,10 @@
       <w>time</w>
       <w>tipsflag</w>
       <w>unchanged</w>
+      <w>videoid</w>
       <w>videos</w>
       <w>vname</w>
+      <w>vurl</w>
     </words>
   </dictionary>
 </component>
