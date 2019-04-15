@@ -11,6 +11,7 @@
       <w>column</w>
       <w>complate</w>
       <w>context</w>
+      <w>courseid</w>
       <w>courselist</w>
       <w>courses</w>
       <w>data</w>
@@ -48,8 +49,10 @@
       <w>signout</w>
       <w>skip</w>
       <w>static</w>
+      <w>time</w>
       <w>tipsflag</w>
       <w>unchanged</w>
+      <w>videos</w>
       <w>vname</w>
     </words>
   </dictionary>

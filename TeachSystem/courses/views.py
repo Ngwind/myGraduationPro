@@ -1,7 +1,8 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 from wechatpy.oauth import WeChatOAuth, WeChatOAuthException
-from .models import Scores, Video, CourseProgress
-from users.models import Openid
+from .models import Scores, Video, CourseProgress, Course
+from users.models import Openid, Student
 from users.views import no_login, is_login
 
 
@@ -74,8 +75,22 @@ def re_course_list(request):
 
 # 返回视频观看页面
 def re_video_list(request):
-    context = {"videos": ["v", "learningtime"]}
-    print(request.GET.get("studentid")+request.GET.get('courseid'))
-    return render(request, "courses/learning.html", context)
+    studentid = request.GET.get('studentid')
+    courseid = request.GET.get('courseid')
+    context = {"videos": []}
+    if request.method == "GET" and studentid and courseid:
+        try:
+            course = Course.objects.get(pk=courseid)
+        except Exception:
+            return HttpResponse(status=404)
 
+        for v in Video.objects.filter(course=course):
+            t = CourseProgress.objects.get_or_create(defaults={'progress': '0%'}, video=v, student=Student.objects.get(studentId=studentid))
+            print(t)
+            time_s = t[0].progress  # 观看进度
+            context['videos'].append([v, time_s])  # 保存video和观看进度到context
 
+        return render(request, "courses/learning.html", context)
+
+    else:
+        return HttpResponse(status=403)
