@@ -3,7 +3,7 @@
 <html lang="zh-cmn-Hans">
 <head>
     <meta charset="UTF-8">
-    <title>课程列表</title>
+    <title>视频列表</title>
     <!-- 引入 WeUI -->
     <link rel="stylesheet" href="{% static "users/css/weui/1.1.3/weui.min.css" %}"/>
     <link rel="stylesheet" href="{% static "users/css/weui/0.4.2/weui.min.css" %}"/>
@@ -16,11 +16,11 @@
     <div container>
         <div class="player">
             <video  style="width:100%; height:100%; object-fit:contain"
-                controls
-                src="https://media.w3.org/2010/05/sintel/trailer.mp4"
-                type="video/mp4"
-                webkit-playsinline playsinline x5-playsinline
-                poster="">您的浏览器不支持 video 标签。
+                    controls
+                    preload="meta"
+                    src="https://media.w3.org/2010/05/sintel/trailer.mp4"
+                    type="video/mp4"
+                    webkit-playsinline playsinline x5-playsinline>您的浏览器不支持 video 标签。
 {% comment %}
 "http://vjs.zencdn.net/v/oceans.mp4 "
 "https://media.w3.org/2010/05/sintel/trailer.mp4"
@@ -66,14 +66,5 @@
         </div>
     </div>
 </body>
-{% comment %}<script type="text/javascript">
-    document.body.addEventListener('touchmove', function (e) {
-  e.preventDefault(); //阻止默认的处理方式(阻止下拉滑动的效果)
-}, {passive: false}); //passive 参数不能省略，用来兼容ios和android
-
-    $("div.weui-tab__panel").addEventListener('touchmove', function (e) {
-        //阻止默认的处理方式(阻止下拉滑动的效果)
-}, {passive: true});
-</script>{% endcomment %}
 </html>
 

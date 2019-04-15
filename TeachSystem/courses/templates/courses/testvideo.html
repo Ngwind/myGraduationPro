@@ -1,45 +1,80 @@
 {% load static %}
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cmn-Hans">
 <head>
     <meta charset="UTF-8">
-    <title>百家云播放器sdk demo</title>
-    <link href="http://www.baijiayun.com/m/asset/playback/player.css"
-          rel="stylesheet">
+    <title>课程列表</title>
+    <!-- 引入 WeUI -->
+    <link rel="stylesheet" href="{% static "users/css/weui/1.1.3/weui.min.css" %}"/>
+    <link rel="stylesheet" href="{% static "users/css/weui/0.4.2/weui.min.css" %}"/>
     <script type="text/javascript" src="{% static "users/js/jquery-3.4.0.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "users/js/weui.min.js" %}"></script>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <style type="text/css">body {
+        background-color: #efeff4
+    }</style>
 </head>
-<body>
-<!-- 设置视频区域高度必须写在播放器初始化的dom节点上 -->
-<div id="main" style="width:100%;height:500px"></div>
-<!-- 如需加密播放ev1格式视频，引入flv.min.js -->
-<script src="https://www.baijiayun.com/m/playback/dep/dplayer/1.25/flv.min.js"></script>
-<script src="http://www.baijiayun.com/m/asset/playback/player.js">
-</script>
-<script>
-    var player = new bjcPlayer('#main', {
-        token: 'Jn3SZuoZ03g3S3PxCaNttRb33AcPu-poL5ZQra9b5SYxuSba8SBafg',
-        definition: 'low', // hign 高清 low 低清
-        onended: function () {
-            // console.log('onended');
-        },
-        onplay: function () {
-            // console.log('onplay');
-        },
-        onpause: function () {
-            // console.log('onpause');
-        },
-        onerror: function (e) {
-            console.log('onerror');
-            console.log(e);
-        },
-        ontimeupdate: function (time) {
-              console.log('ontimeupdate-->' + time);
-        },
-        onseeked: function (time) {
-             console.log('onseeked-->' + time);
-        }
-    });
-    player.play('5153273');
-</script>
+<body ontouchstart>
+<div container>
+        <div class="player">
+            <video id='video' style="width:100%; height:100%; object-fit:contain"
+                    controls
+                    autoplay="autoplay"
+                    src="https://media.w3.org/2010/05/sintel/trailer.mp4"
+                    type="video/mp4"
+                    webkit-playsinline playsinline x5-playsinline>您的浏览器不支持 video 标签。
+</video>
+        </div>
+        <div class="weui-tab">
+            <!--课程视频播放标题头-->
+            <div class="weui-navbar">
+                <div class="weui-navbar__item">
+                    课程视频列表
+                </div>
+            </div>
+            <!--课程视频播放列表-->
+            <div class="weui-cells weui-tab__panel " style="margin-top:0">
+
+            </div>
+        </div>
+    </div>
 </body>
+<script>
+       var that = this;
+        var resetTime = 0; // 拖动后重置播放时间
+        var curTime = 0;  // 当前播放时间
+        var vd = document.getElementById("video"); //获取video对象
+        var getCurTime = localStorage.getItem('remTime'); //获取本地存储
+        if ( getCurTime > 0.1) {
+                curTime = getCurTime;
+                resetTime = getCurTime;
+                vd.addEventListener('play',function(){
+                        setTimeout(function(){
+                                vd.currentTime = getCurTime;
+                                setInterval(timer,100)
+                        },2000)
+                })
+        } else {
+                vd.play();
+                setInterval(timer,100)
+        }
+
+        // 定时器
+        function timer () {
+                curTime = vd.currentTime;
+                var apartTime = curTime - resetTime;
+                if(apartTime > 2) {
+                        vd.currentTime = resetTime;
+                } else {
+                        resetTime = curTime;
+                }
+                that.curTime = curTime;
+        }
+
+        vd.addEventListener('pause',function(){
+                localStorage.setItem('remTime',that.curTime);
+        })
+</script>
+
 </html>
