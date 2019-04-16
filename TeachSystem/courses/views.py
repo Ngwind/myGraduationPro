@@ -142,7 +142,7 @@ def re_course_score(request):
     context = {}
     studentid = request.GET.get("studentid")
     openid = get_openid(request)
-    if openid:
+    if openid != "error":
         studentid = Openid.objects.get(openid=openid).studentid.studentId
     if studentid:
         s_l = Scores.objects.filter(student__studentId=studentid)
