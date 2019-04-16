@@ -7,4 +7,5 @@ urlpatterns = [
     path("learning/", views.re_video_list, name="learning"),
     path("getvurl/", views.re_video_url, name="getvurl"),
     path("setprogress/", views.re_learn_progress, name="progress"),
+    path("coursescore", views.re_course_score, name="score"),
 ]

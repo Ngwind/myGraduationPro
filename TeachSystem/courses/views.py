@@ -135,3 +135,21 @@ def re_learn_progress(request):
         else:
             return HttpResponse("nologin")
     return HttpResponse(403)
+
+
+# 返回课程成绩页面
+def re_course_score(request):
+    context = {}
+    studentid = request.GET.get("studentid")
+    openid = get_openid(request)
+    if openid:
+        studentid = Openid.objects.get(openid=openid).studentid.studentId
+    if studentid:
+        s_l = Scores.objects.filter(student__studentId=studentid)
+        context['coursescore'] = []
+        for s in s_l:
+            print(s,"11")
+            context['coursescore'].append([s.course.courseName, s.score])
+        return render(request, "courses/scorelist.html", context)
+
+    return HttpResponse(status=403)

@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <title>课程列表</title>
+    <!-- 引入 WeUI -->
+    <link rel="stylesheet" href="{% static "users/css/weui/1.1.3/weui.min.css" %}"/>
+    <link rel="stylesheet" href="{% static "users/css/weui/0.4.2/weui.min.css" %}"/>
+    <script type="text/javascript" src="{% static "users/js/jquery-3.4.0.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "users/js/weui.min.js" %}"></script>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <style type="text/css">body {
+        background-color: #efeff4
+    }</style>
+</head>
+<body ontouchstart>
+<div class="container">
+    <div class="weui-cells__title">课程分数列表</div>
+    {% for s in coursescore %}
+        <div class="weui-cells">
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><img align="center" src="{% static "courses/image/score.svg" %}"></div>
+            <div class="weui-cell__bd">《{{ s.0 }}》</div>
+            <div class="weui-cell__ft">{% if s.1 < 60 %}<h2 style="display: inline;color:#d81e06;">{{ s.1 }}</h2>
+                {% elif s.1 < 80 %}<h2 style="display: inline;color:#f4ea2a;">{{ s.1 }}</h2>
+                {% else %}<h2 style="display: inline;color:#1afa29;">{{ s.1 }}</h2>
+                {% endif %}分</div>
+        </div>
+        </div>
+    {% empty %}
+        <div class="weui-loadmore weui-loadmore_line">
+            <span class="weui-loadmore__tips">暂无数据</span>
+        </div>
+    {% endfor %}
+    </div>
+</body>
+</html>
