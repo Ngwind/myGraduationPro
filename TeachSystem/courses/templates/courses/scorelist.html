@@ -22,9 +22,9 @@
         <div class="weui-cell">
             <div class="weui-cell__hd"><img align="center" src="{% static "courses/image/score.svg" %}"></div>
             <div class="weui-cell__bd">《{{ s.0 }}》</div>
-            <div class="weui-cell__ft">{% if s.1 < 60 %}<h2 style="display: inline;color:#d81e06;">{{ s.1 }}</h2>
-                {% elif s.1 < 80 %}<h2 style="display: inline;color:#f4ea2a;">{{ s.1 }}</h2>
-                {% else %}<h2 style="display: inline;color:#1afa29;">{{ s.1 }}</h2>
+            <div class="weui-cell__ft">{% if s.1 < 60 %}<h2 style="display: inline;color:#d81e06;font-family:Georgia">{{ s.1 }}</h2>
+                {% elif s.1 < 80 %}<h2 style="display: inline;color:#f4ea2a;font-family:Georgia">{{ s.1 }}</h2>
+                {% else %}<h2 style="display: inline;color:#1afa29;font-family:Georgia">{{ s.1 }}</h2>
                 {% endif %}分</div>
         </div>
         </div>
