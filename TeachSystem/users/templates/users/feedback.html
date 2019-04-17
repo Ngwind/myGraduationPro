@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <title>意见反馈</title>
+    <!-- 引入 WeUI -->
+    <link rel="stylesheet" href="{% static "users/css/weui/1.1.3/weui.min.css" %}"/>
+    <link rel="stylesheet" href="{% static "users/css/weui/0.4.2/weui.min.css" %}"/>
+    <script type="text/javascript" src="{% static "users/js/jquery-3.4.0.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "users/js/weui.min.js" %}"></script>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <style type="text/css">body{background-color:#efeff4}</style>
+</head>
+<body ontouchstart>
+    <div class="container">
+        <div class="weui_cells_title">意见反馈</div>
+        <div class="weui_cells weui_cells_form">
+        <div class="weui_cell">
+            <div class="weui_cell_bd weui_cell_primary">
+                <textarea class="weui_textarea" id="textarea" placeholder="请简要描述你的问题和意见" rows="3" maxlength="200"></textarea>
+                <div class="weui_textarea_counter"><span id="commentCounter">1</span>/200</div>
+            </div>
+        </div>
+    </div>
+        <div class="weui_btn_area">
+            <a class="weui_btn weui_btn_primary" id="finish" href="javascript:">提交</a>
+        </div>
+    </div>
+<script>
+      $(document).ready(function(){
+        $('#textarea').on('input propertychange', function() {
+         var count = $(this).val().length;
+         $('#commentCounter').text(count);
+        });
+        $('#finish').on('click', function () {
+            weui.toast("提交成功", 1000);
+            window.close();
+
+        })
+      });
+    </script>
+</body>
+</html>

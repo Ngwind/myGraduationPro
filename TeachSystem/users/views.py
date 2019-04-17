@@ -17,9 +17,11 @@ def is_login(studentid):
         return False
     return False
 
+
 # 返回未登录弹窗页面
 def no_login(request):
     return render(request, "users/nologin.html")
+
 
 # 返回静态登录页面或者重定向到个人中心
 def login(request):
@@ -69,6 +71,7 @@ def login(request):
             context['openid'] = openid  # 再次带上openid
     return render(request, "users/login.html", context)
 
+
 # 接受一个openid，解绑openid和studentid关系，退出登录
 def logout(request):
     """接受一个openid，解绑openid和studentid关系，退出登录"""
@@ -85,6 +88,7 @@ def logout(request):
     else:
         return HttpResponse(status=400)
 
+
 # 返回更多操作list页
 def more_settings(request):
     if request.method == "GET":
@@ -96,6 +100,7 @@ def more_settings(request):
                 return HttpResponseRedirect("/user/nologin")
     return HttpResponse(status=403)
 
+
 # 返回修改密码页
 def re_change_pwd(request):
     if request.method == "GET":
@@ -104,6 +109,7 @@ def re_change_pwd(request):
             if is_login(studentid):
                 return render(request,"users/changepwd.html", context={"studentid": studentid})
     return HttpResponse(status=403)
+
 
 # 修改密码函数
 def change_pwd(request):
@@ -122,3 +128,8 @@ def change_pwd(request):
             except ObjectDoesNotExist:
                 return HttpResponse("pwderror")
     return HttpResponse("error")
+
+
+# 返回用户反馈页面
+def re_feedback(request):
+    return render(request, "users/feedback.html")

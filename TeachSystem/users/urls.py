@@ -9,4 +9,5 @@ urlpatterns = [
     path('changepwd/', views.re_change_pwd, name="changepwd"),
     path('modpwd/', views.change_pwd, name="modpwd"),
     path("nologin/", views.no_login, name="nologin"),
+    path("feedback/", views.re_feedback, name="feedback"),
 ]
