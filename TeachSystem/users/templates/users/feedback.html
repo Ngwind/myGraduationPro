@@ -44,6 +44,7 @@
                 l.hide();
                 if (response == "ok") {
                     weui.toast("感谢反馈", 1000)
+                    document.getElementById("textarea").value="";
                 } else {
                     if (response == "error") {
                         weui.toast("提交失败", 1000)
