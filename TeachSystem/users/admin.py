@@ -7,7 +7,7 @@ from django.contrib.auth.models import Group
 from django.contrib import admin, messages
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.hashers import make_password
-from .models import Teacher, Student, Openid
+from .models import Teacher, Student, Openid, Feedback
 from courses.models import CourseProgress, Video, Scores, Course  # 忽略这些红色波浪线，其实是正确的
 
 
@@ -151,3 +151,9 @@ class TeacherAdmin(ImportExportMixin, UserAdmin):
 class OpenidAdmin(ModelAdmin):
     list_display = ['pk', 'openid', 'studentid', 'createdate', 'editdate']
     # search_fields = ['studentid']
+
+
+# ---------------feedfack-----------------
+@admin.register(Feedback)
+class FeedbackAdmin(ModelAdmin):
+    list_display = ['openid', 'createdate']

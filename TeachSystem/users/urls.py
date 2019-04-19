@@ -10,4 +10,5 @@ urlpatterns = [
     path('modpwd/', views.change_pwd, name="modpwd"),
     path("nologin/", views.no_login, name="nologin"),
     path("feedback/", views.re_feedback, name="feedback"),
+    path("setfeedback/", views.get_feedback, name="setfeedback"),
 ]

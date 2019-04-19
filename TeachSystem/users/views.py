@@ -1,7 +1,7 @@
 from django.shortcuts import render, render_to_response, HttpResponseRedirect
 from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
-from .models import Student, Openid
+from .models import Student, Openid, Feedback
 from wechatpy.oauth import WeChatOAuth, WeChatOAuthException
 
 def index(request):
@@ -132,4 +132,22 @@ def change_pwd(request):
 
 # 返回用户反馈页面
 def re_feedback(request):
-    return render(request, "users/feedback.html")
+    from courses.views import get_openid
+    openid = get_openid(request)
+    if openid != "error":
+        return render(request, "users/feedback.html", context={'openid': openid})
+    else:
+        return HttpResponse(status=403)
+
+
+# 保存用户反馈内容
+def get_feedback(request):
+    try:
+        context = request.GET.get('context')
+        openid = request.GET.get('openid')
+        if context =="":
+            raise Exception
+        Feedback.objects.create(context=context, openid=openid)
+        return HttpResponse('ok')
+    except Exception:
+        return HttpResponse("error")

@@ -29,14 +29,25 @@
     </div>
 <script>
       $(document).ready(function(){
+          var openid = {{ openid|safe }}
         $('#textarea').on('input propertychange', function() {
          var count = $(this).val().length;
          $('#commentCounter').text(count);
         });
         $('#finish').on('click', function () {
-            weui.toast("提交成功", 1000);
-            window.close();
-
+          let l = weui.loading("提交中...");
+            $.get("/users/setfeedback/?openid="+openid+"&context="+$('#textarea').attr(), function (response, ststus) {
+                l.hide();
+                if(response=="ok"){
+                    weui.toast("感谢反馈", 1000)
+                }else {
+                    if(response=="error"){
+                        weui.toast("提交失败", 1000)
+                    }else {
+                        weui.toast("未知错误", 1000)
+                    }
+                }
+            });
         })
       });
     </script>

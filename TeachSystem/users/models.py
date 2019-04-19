@@ -52,3 +52,16 @@ class Openid(models.Model):
 
     def __str__(self):
         return self.studentid.__str__()
+
+
+class Feedback(models.Model):
+    context = models.CharField('反馈内容', max_length=400, default="")
+    createdate = models.DateTimeField("添加时间", auto_now_add=True)
+    openid = models.CharField('openid', max_length=200, default="")
+
+    class Meta:
+        verbose_name = "用户反馈"
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.createdate.__str__()
