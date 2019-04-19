@@ -157,3 +157,4 @@ class OpenidAdmin(ModelAdmin):
 @admin.register(Feedback)
 class FeedbackAdmin(ModelAdmin):
     list_display = ['openid', 'createdate']
+    readonly_fields = list_display
