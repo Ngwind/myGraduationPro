@@ -29,7 +29,7 @@
     </div>
 <script>
       $(document).ready(function(){
-          var openid = {{ openid|safe }}
+          var openid = {{ openid }}
         $('#textarea').on('input propertychange', function() {
          var count = $(this).val().length;
          $('#commentCounter').text(count);
