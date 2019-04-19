@@ -10,46 +10,50 @@
     <script type="text/javascript" src="{% static "users/js/jquery-3.4.0.min.js" %}"></script>
     <script type="text/javascript" src="{% static "users/js/weui.min.js" %}"></script>
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
-    <style type="text/css">body{background-color:#efeff4}</style>
+    <style type="text/css">body {
+        background-color: #efeff4
+    }</style>
 </head>
 <body ontouchstart>
-    <div class="container">
-        <div class="weui_cells_title">意见反馈</div>
-        <div class="weui_cells weui_cells_form">
+<div class="container">
+    <div class="weui_cells_title">意见反馈</div>
+    <div class="weui_cells weui_cells_form">
         <div class="weui_cell">
             <div class="weui_cell_bd weui_cell_primary">
-                <textarea class="weui_textarea" id="textarea" placeholder="请简要描述你的问题和意见" rows="3" maxlength="200"></textarea>
+                <textarea class="weui_textarea" id="textarea" placeholder="请简要描述你的问题和意见" rows="3"
+                          maxlength="200"></textarea>
                 <div class="weui_textarea_counter"><span id="commentCounter">1</span>/200</div>
             </div>
         </div>
     </div>
-        <div class="weui_btn_area">
-            <a class="weui_btn weui_btn_primary" id="finish" href="javascript:">提交</a>
-        </div>
+    <div class="weui_btn_area">
+        <a class="weui_btn weui_btn_primary" id="finish" href="javascript:">提交</a>
     </div>
-<script>
-      $(document).ready(function(){
-          var openid = {{ openid }}
-        $('#textarea').on('input propertychange', function() {
-         var count = $(this).val().length;
-         $('#commentCounter').text(count);
+</div>
+<script type="text/javascript">
+
+    var openid ="{{ openid|safe }}";
+    $(document).ready(function () {
+        $('#textarea').on('input propertychange', function () {
+            var count = $(this).val().length;
+            $('#commentCounter').text(count);
         });
         $('#finish').on('click', function () {
-          let l = weui.loading("提交中...");
-            $.get("/users/setfeedback/?openid="+openid+"&context="+$('#textarea').attr(), function (response, ststus) {
+            let l = weui.loading("提交中...");
+            $.get("/user/setfeedback/?openid=" + openid + "&context=" + $('#textarea').val(), function (response, ststus) {
                 l.hide();
-                if(response=="ok"){
+                if (response == "ok") {
                     weui.toast("感谢反馈", 1000)
-                }else {
-                    if(response=="error"){
+                } else {
+                    if (response == "error") {
                         weui.toast("提交失败", 1000)
-                    }else {
+                    } else {
                         weui.toast("未知错误", 1000)
                     }
                 }
             });
         })
-      });
-    </script>
+    });
+</script>
 </body>
 </html>
