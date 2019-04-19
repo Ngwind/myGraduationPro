@@ -134,7 +134,7 @@ def change_pwd(request):
 def re_feedback(request):
     from courses.views import get_openid
     openid = get_openid(request)
-    if openid != "error":
+    if openid == "error":
         return render(request, "users/feedback.html", context={'openid': openid})
     else:
         return HttpResponse(status=403)
