@@ -22,7 +22,7 @@ def get_openid(request):
             try:
                 json_oauth = wco.fetch_access_token(code)
                 return json_oauth['openid']
-            except WeChatOAuthException:  # 考虑code被重复使用的情况，重定向到用户登录-微信授权url
+            except Exception:  # 考虑code被重复使用的情况，重定向到用户登录-微信授权url
                 pass
     return "error"
 
@@ -142,6 +142,7 @@ def re_course_score(request):
     context = {}
     studentid = request.GET.get("studentid")
     openid = get_openid(request)
+    print("openid:", openid)
     if openid != "error":
         studentid = Openid.objects.get(openid=openid).studentid.studentId
     if studentid:
