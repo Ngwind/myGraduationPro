@@ -114,6 +114,7 @@
                                 $('#' + playingvideoid).children("div.weui-cell__ft").text("已学:" + response);
                             } else {
                                 weui.alert("登录状态无效，请重新登录！", function () {
+                                    video.pause();
                                     $(location).prop('href', 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx425d2aedb363e9c6&redirect_uri=https%3a%2f%2fwww.gdutwuwenda.cn%2fuser%2flogin%2f&response_type=code&scope=snsapi_base&state=123#wechat_redirect');
                                 });
                             }
