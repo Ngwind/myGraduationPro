@@ -16,10 +16,7 @@ def _make_action(course, course_obj):
     def binding_to_video(StudentAdmin, request, queryset):
         """创建指定课程的Scores的action函数"""
         for stu in queryset:
-            # print(course_obj)
-            # print(stu)
             res = Scores.objects.update_or_create(defaults={'score': 0}, course=course_obj, student=stu)  # course课程主键, student学生主键
-            # print(res)
         messages.success(request, '操作成功！')
         pass
     binding_to_video.func_name = 'binding_to_video_{}'.format(course_obj.id)
@@ -71,17 +68,12 @@ class StudentAdmin(ImportExportModelAdmin):
 
     def get_actions(self, request):
         actions = super().get_actions(request)
-        # if request.user.is_superuser:
-        #     print(actions)
-        #     return actions
-        # else:
         qs = Course.objects.filter(publisher=request.user.id)
         for obj in qs:
             func = _make_action(obj.courseName, obj)
             name = func.func_name
             desc = func.short_description
             actions[name] = (func, name, desc)
-            # print(actions)
         return OrderedDict(actions)
 
     def get_readonly_fields(self, request, obj=None):

@@ -100,7 +100,7 @@
         var current = video.currentTime;
         if (current - last > 2) {
             video.currentTime = last;
-            //last = current;
+            last = current;
         } else {
             last = current;
             if (last - lastsend > 10) {
@@ -120,7 +120,7 @@
                         });
                 }, 3000);//更新观看进度
             }
-            if (video.duration - current < 1 && fnh == 0) {
+            if (video.duration != current && video.duration - current < 3 && fnh == 0) {
                 fnh = 1;
                 console.log("end");//更新观看进度100%
                 setTimeout(function () {
