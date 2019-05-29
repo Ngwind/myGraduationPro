@@ -1,8 +1,9 @@
 from django.contrib import admin
 from django.db.models import ForeignKey
+from django.contrib.admin import ModelAdmin
 from users.models import Teacher, Student  # 忽略这些红色波浪线，其实是正确的
 from .models import Course, Video, CourseProgress, Scores
-from import_export.admin import ImportExportModelAdmin
+from import_export.admin import ImportExportModelAdmin, ExportMixin
 from import_export.resources import ModelResource
 from django.apps import apps
 from django.db.models.query import QuerySet
@@ -39,11 +40,11 @@ class ProgressResource(ModelResource):
 
 
 @admin.register(CourseProgress)
-class ProgressAdmin(ImportExportModelAdmin):
+class ProgressAdmin(ExportMixin, ModelAdmin):
     list_display = ('video', 'student', 'editdate', 'progress')
     search_fields = ('video__videoName', 'student__username')
     ordering = ('video', 'student')
-    readonly_fields = ['progress', 'editdate', 'video', 'student']
+    readonly_fields = ['video', 'student', 'progress']
     resource_class = ProgressResource
 
     def get_queryset(self, request):
@@ -301,11 +302,12 @@ class ScoresResource(ModelResource):
             # 如果我们设置过verbose_name，则将column_name替换为verbose_name。否则维持原有的字段名
             if field_name in self.vname_dict.keys():
                 field.column_name = self.vname_dict[field_name]
+                pass
         return fields
 
     class Meta:
         model = Scores
-        fields = ('course', 'student', 'score')
+        fields = ('course', 'student', 'score', 'student__username', 'student__userclass', 'student__college')
         import_id_fields = ('course', 'student',)
         export_order = fields
         skip_unchanged = True

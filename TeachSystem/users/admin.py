@@ -61,7 +61,7 @@ class StudentAdmin(ImportExportModelAdmin):
     search_fields = ['studentId', 'username', 'college', 'userclass']
     list_filter = ['college', ]
     ordering = ('college', 'userclass', 'studentId')
-    readonly_fields = ['studentId', 'username', 'college', 'userclass', 'createdate', 'password', 'gender']
+    readonly_fields = ['studentId', 'username', 'college', 'userclass', 'password', 'gender']
     # list_editable = ['college', 'userclass']
     resource_class = StudentResource
     # actions = [_make_action(course, course_id) for course, course_id in ]
