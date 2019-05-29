@@ -144,7 +144,11 @@ def re_course_score(request):
     openid = get_openid(request)
     print("openid:", openid)
     if openid != "error":
-        studentid = Openid.objects.get(openid=openid).studentid.studentId
+        try:
+            studentid = Openid.objects.get(openid=openid).studentid.studentId
+        except Exception:
+            return no_login(request)
+
     if studentid:
         s_l = Scores.objects.filter(student__studentId=studentid)
         context['coursescore'] = []
