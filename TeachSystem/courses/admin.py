@@ -42,6 +42,7 @@ class ProgressResource(ModelResource):
 @admin.register(CourseProgress)
 class ProgressAdmin(ExportMixin, ModelAdmin):
     list_display = ('video', 'student', 'editdate', 'progress')
+    list_display_links = []
     search_fields = ('video__videoName', 'student__username')
     ordering = ('video', 'student')
     readonly_fields = ['video', 'student', 'progress']
@@ -57,8 +58,15 @@ class ProgressAdmin(ExportMixin, ModelAdmin):
     def get_readonly_fields(self, request, obj=None):
         """  重新定义此函数，限制普通用户所能修改的字段  """
         if request.user.is_superuser:
-            self.readonly_fields = []
+            self.readonly_fields = ['video', 'student']
         return self.readonly_fields
+
+    def get_list_display_links(self, request, list_display):
+        """  重新定义此函数，限制普通用户不能转跳  """
+        if request.user.is_superuser:
+            print(1)
+            self.list_display_links = ["progress", ]
+        return self.list_display_links
 
 
 # 课程
